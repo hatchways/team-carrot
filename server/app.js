@@ -6,6 +6,8 @@ import logger from "morgan";
 
 import indexRouter from "./routes/index";
 import pingRouter from "./routes/ping";
+import homeRouter from "./routes/home";
+import registerUserRouter from "./routes/users";
 
 var app = express();
 
@@ -15,8 +17,11 @@ app.use(urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(join(__dirname, "public")));
 
+// connect with routes
 app.use("/", indexRouter);
 app.use("/ping", pingRouter);
+app.use("/", homeRouter);
+app.use("/", registerUserRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
