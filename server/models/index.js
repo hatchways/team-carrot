@@ -8,14 +8,10 @@ dotenv.config();
 
 const basename = path.basename(module.filename);
 const env = process.env.NODE_ENV;
+const url = process.env.DEV_DB_URL;
 const config = dbConfig[env];
 const db = {};
-console.log(config);
-console.log("check here ");
-const sequelize = new Sequelize(
-  "postgres://postgres:123Abcd123@localhost:5342/postgresTest",
-  config
-);
+const sequelize = new Sequelize(config);
 
 fs.readdirSync(__dirname)
   .filter(file => {
