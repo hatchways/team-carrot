@@ -31,5 +31,63 @@ export default {
       data: { ...responseObject },
       status: 201
     });
+  },
+
+  async getOneUser(req, res) {
+    const user = await Users.findByPk(req.params.id);
+    const data = {
+      username: user.username,
+      email: user.email,
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt,
+      isAdmin: user.isAdmin
+    };
+
+    const responseObject = { data, status: 200 };
+
+    return res.send(responseObject);
+  },
+
+  async getAllUsers(req, res) {
+    const data = await Users.findAll().map(user => {
+      return {
+        username: user.username,
+        email: user.email,
+        isAdmin: user.isAdmin
+      };
+    });
+    return res.send({ data, status: 200 });
+  },
+
+  async updateUserDetails(req, res) {
+    let { username, email } = req.body;
+    username = username && username.trim();
+    email = email && email.trim();
+
+    const user = await Users.findByPk(req.params.id);
+
+    const updatedUser = await user.update({
+      username: username || user.username,
+      email: email || user.email
+    });
+
+    const data = {
+      id: updatedUser.id,
+      username: updatedUser.username,
+      email: updatedUser.email,
+      isAdmin: updatedUser.isAdmin
+    };
+
+    const message = { message: "Successfully Updated" };
+
+    const responseObject = { data, message, status: 200 };
+
+    return res.send(responseObject);
+  },
+
+  async deleteUser(req, res) {
+    await Users.destroy({ where: { id: req.params.id } });
+    const message = { message: "User deleted" };
+    return res.json(message);
   }
 };
