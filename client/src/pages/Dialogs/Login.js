@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { Dialog, Button } from "@material-ui";
+import { Dialog, Button } from "@material-ui/core";
 // import Dialog from '@material-ui/core/Dialog';
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
@@ -12,17 +12,29 @@ export default class Login extends React.Component {
     open: false
   };
 
+  handleToggle = () => {
+    this.setState({
+      open: !this.state.open
+    });
+  };
+
   render() {
     const { open } = this.state;
 
     return (
       <Fragment>
-        <Button variant="fab" mini>
-          <AddIcon />
+        <Button
+          variant="contained"
+          color="secondary"
+          style={{ background: "#aa1717" }}
+          onClick={this.handleToggle.bind(this)}
+          mini
+        >
+          Log In
         </Button>
         <Dialog
           open={open}
-          onClose={this.state.handleClose}
+          onClose={this.handleToggle.bind(this)}
           aria-labelledby="form-dialog-title"
         >
           <DialogTitle id="form-dialog-title">
