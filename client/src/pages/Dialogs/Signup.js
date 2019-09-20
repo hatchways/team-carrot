@@ -12,8 +12,8 @@ import FormHelperText from "@material-ui/core/FormHelperText";
 
 const styles = theme => ({
   dialogPaper: {
-    minHeight: "90vh",
-    maxHeight: "90vh",
+    minHeight: "95vh",
+    maxHeight: "95vh",
     minWidth: "45vw",
     maxWidth: "45vw",
     display: "flex",
@@ -65,7 +65,8 @@ export default withStyles(styles)(
         name: "",
         email: "",
         password: "",
-        confirmPassword: ""
+        confirmPassword: "",
+        message: ""
       }
     };
 
@@ -79,24 +80,30 @@ export default withStyles(styles)(
       this.setState({
         data: {
           ...this.state.data,
-          [name]: value
+          [name]: value,
+          message: ""
         },
         mismatch: false
       });
     };
 
     handleSubmit = data => {
-      const { password, confirmPassword } = data;
+      const { password, confirmPassword, message } = data;
       if (password !== confirmPassword) {
         this.setState({
-          mismatch: !this.state.mismatch
+          mismatch: !this.state.mismatch,
+          data: {
+            ...this.state.data,
+            message: "Password does not match"
+          }
         });
       } else {
         try {
           Axios.post("http://localhost:3000/user/register", {
             name: data.name,
             email: data.email,
-            password: data.password
+            password: data.password,
+            confirmPassword: data.confirmPassword
           }).then(res => {
             console.log(res);
           });
@@ -110,7 +117,7 @@ export default withStyles(styles)(
       const {
         open,
         mismatch,
-        data: { name, email, password, confirmPassword }
+        data: { name, email, password, confirmPassword, message }
       } = this.state;
 
       const { classes } = this.props;
@@ -194,20 +201,25 @@ export default withStyles(styles)(
                 />
 
                 <p className={classes.textFieldHeader}>Confirm Password:</p>
-                <TextField
-                  id="outlined-password-input"
-                  label="Password"
-                  value={confirmPassword}
-                  onChange={this.handleChange("confirmPassword")}
-                  type="password"
-                  autoComplete="current-password"
-                  margin="normal"
-                  variant="outlined"
-                  className={classes.FormControl}
-                  inputProps={{ minLength: 6 }}
-                  error={mismatch}
-                  required
-                />
+                <FormControl className={classes.FormControl} error={mismatch}>
+                  <TextField
+                    id="outlined-confirmPassword-input"
+                    label="Password"
+                    value={confirmPassword}
+                    onChange={this.handleChange("confirmPassword")}
+                    type="password"
+                    autoComplete="current-password"
+                    margin="normal"
+                    variant="outlined"
+                    style={{ marginTop: "4px" }}
+                    inputProps={{ minLength: 6 }}
+                    error={mismatch}
+                    required
+                  />
+                  <FormHelperText id="component-error-text">
+                    {message}
+                  </FormHelperText>
+                </FormControl>
               </ThemeProvider>
 
               <DialogActions>
