@@ -3,12 +3,14 @@ import express, { json, urlencoded } from "express";
 import { join } from "path";
 import cookieParser from "cookie-parser";
 import logger from "morgan";
-import cors from "cors";
+import connectDB from "./config/db";
 
 import indexRouter from "./routes/index";
 import pingRouter from "./routes/ping";
+import userRouter from "./routes/user";
 
 var app = express();
+connectDB();
 
 app.use(logger("dev"));
 app.use(json());
@@ -19,6 +21,7 @@ app.use(cors());
 
 app.use("/", indexRouter);
 app.use("/ping", pingRouter);
+app.use("/user", userRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
