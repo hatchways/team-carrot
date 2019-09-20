@@ -1,0 +1,4 @@
+{
+    "mongoConn": "mongodb+srv://Kaur:admin@cluster0-trwbw.mongodb.net/TeamCarrot?retryWrites=true",
+    "jwtSecret": "secret"
+}
