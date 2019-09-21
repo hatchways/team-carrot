@@ -80,12 +80,14 @@ export default withStyles(styles)(
     handleSubmit = data => {
       try {
         axios
-          .post("http://localhost:3000/user/login", {
+          .post("http://localhost:4000/user/login", {
             email: data.email,
             password: data.password
           })
           .then(res => {
             console.log(res);
+            console.log(res.data);
+            localStorage.setItem("res-jwt", res.data.token);
           });
       } catch (error) {
         console.log(error);

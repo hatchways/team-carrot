@@ -14,7 +14,7 @@ function App() {
     <MuiThemeProvider theme={theme}>
       <BrowserRouter>
         {/* <Route path="/" component={Landing} /> */}
-        {/* <Route path="/home" component={TempLanding} /> */}
+        <Route path="/home" component={TempLanding} />
         <Route path="/signup" component={Signup} />
         <Route path="/signin" component={Signin} />
       </BrowserRouter>

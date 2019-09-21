@@ -99,13 +99,14 @@ export default withStyles(styles)(
         });
       } else {
         try {
-          Axios.post("http://localhost:3000/user/register", {
+          Axios.post("http://localhost:4000/user/register", {
             name: data.name,
             email: data.email,
             password: data.password,
-            confirmPassword: data.confirmPassword
+            passwordConfirmation: data.confirmPassword
           }).then(res => {
             console.log(res);
+            localStorage.setItem("res-jwt", res.data.token);
           });
         } catch (error) {
           console.log(error);
