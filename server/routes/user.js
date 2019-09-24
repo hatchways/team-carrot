@@ -7,10 +7,11 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import config from 'config';
 import { check, validationResult, body } from 'express-validator';
-import auth from '../middleware/auth';
 import User from '../models/User';
 
 const router = express.Router();
+
+//REGISTER
 
 router.post('/register', [
         check('name', 'Name is required')
@@ -79,19 +80,8 @@ router.post('/register', [
 
 
 
+// LOGIN
 
-// /-----------------------------------------------------------------------------------------------
-
-// router.get('/', auth, async(req, res) => {
-//     try {
-//         //use the user model to get user info except password
-//         const user = await User.findById(req.user.id).select('-password');
-//         res.json(user);
-//     } catch (err) {
-//         console.error(err.message);
-//         res.status(500).send('server error');
-//     }
-// });
 
 //@route   POST api/auth
 //@desc    Authenticate user and get token

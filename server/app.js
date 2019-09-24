@@ -8,6 +8,7 @@ import connectDB from "./config/db"
 import indexRouter from "./routes/index";
 import pingRouter from "./routes/ping";
 import userRouter from "./routes/user";
+import itemRouter from "./routes/item";
 
 var app = express();
 connectDB();
@@ -21,6 +22,7 @@ app.use(express.static(join(__dirname, "public")));
 app.use("/", indexRouter);
 app.use("/ping", pingRouter);
 app.use("/user", userRouter);
+app.use("/item", itemRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
