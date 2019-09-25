@@ -59,7 +59,7 @@ const theme = createMuiTheme({
 export default withStyles(styles)(
   class SignUp extends React.Component {
     state = {
-      open: true,
+      open: false,
       mismatch: false,
       data: {
         name: "",

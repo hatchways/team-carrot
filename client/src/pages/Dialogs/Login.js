@@ -55,7 +55,7 @@ const theme = createMuiTheme({
 export default withStyles(styles)(
   class Signin extends React.Component {
     state = {
-      open: true,
+      open: false,
       data: {
         email: "",
         password: ""
