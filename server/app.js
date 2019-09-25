@@ -3,6 +3,7 @@ import express, { json, urlencoded } from "express";
 import { join } from "path";
 import cookieParser from "cookie-parser";
 import logger from "morgan";
+import cors from "cors";
 import connectDB from "./config/db";
 
 import indexRouter from "./routes/index";
