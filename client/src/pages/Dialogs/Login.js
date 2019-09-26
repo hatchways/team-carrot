@@ -80,7 +80,7 @@ export default withStyles(styles)(
     handleSubmit = data => {
       try {
         axios
-          .post("http://localhost:3000/user/login", {
+          .post("/user/login", {
             email: data.email,
             password: data.password
           })

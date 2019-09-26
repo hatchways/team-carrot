@@ -5,9 +5,13 @@ import Typography from "@material-ui/core/Typography";
 import Signup from "../../Dialogs/Signup";
 import Login from "../../Dialogs/Login";
 
+const ToolBarStyle = {
+  background: "#DF1B1B"
+};
+
 export default props => (
   <AppBar position="static">
-    <Toolbar style={{ background: "#DF1B1B" }}>
+    <Toolbar style={ToolBarStyle}>
       <Typography
         variant="h6"
         component="h2"
