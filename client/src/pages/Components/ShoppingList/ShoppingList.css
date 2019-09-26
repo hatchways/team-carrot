@@ -1,0 +1,24 @@
+.shoppingList-container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 5vw;
+
+  /* width: 80vw; */
+}
+
+.shoppingList-title {
+  width: 85%;
+}
+
+.shoppingList-title h4 {
+  margin-top: 30px;
+  margin-bottom: 10px;
+}
+
+.shoppingList-content {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}

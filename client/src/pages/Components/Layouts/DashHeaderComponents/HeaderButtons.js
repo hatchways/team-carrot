@@ -6,7 +6,11 @@ const containerStyle = {
 };
 
 const buttonStyle = {
-  margin: "0 15px"
+  margin: "0 15px",
+  border: "none",
+  backgroundColor: "#FFFFFF",
+  cursor: "pointer",
+  fontWeight: "550"
 };
 
 const HeaderButtons = props => {

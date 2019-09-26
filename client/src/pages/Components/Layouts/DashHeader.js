@@ -6,7 +6,7 @@ import HeaderButtons from "./DashHeaderComponents/HeaderButtons";
 import HeaderProfile from "./DashHeaderComponents/HeaderProfile";
 
 const styleToolbar = {
-  background: "#eee",
+  background: "#FFFFFF",
   display: "flex",
   alignItem: "center",
   justifyContent: "space-between"

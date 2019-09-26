@@ -1,12 +1,29 @@
 import React, { Component } from "react";
 import Dropdown from "./Dropdown";
 import "./AddItem.css";
+import NewItem from "../../Dialogs/NewItem";
 
 class AddItem extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      addClicked: false
+    };
+  }
+
+  handleClick(e) {
+    this.setState({
+      addClicked: !this.state.addClicked
+    });
+  }
+
   render() {
     return (
       <div className="additem-container">
-        <form>
+        <label>
+          <h3>Add new item:</h3>
+        </label>
+        <div className="additem-first-input">
           <input
             type="text"
             name="linkInput"
@@ -16,11 +33,17 @@ class AddItem extends Component {
             className="additem-link-input"
           />
           <Dropdown />
-
-          <button type="submit" className="additem-button">
+          <NewItem
+            open={this.state.addClicked}
+            handleClick={this.handleClick.bind(this)}
+          />
+          <button
+            className="additem-button"
+            onClick={this.handleClick.bind(this)}
+          >
             ADD
           </button>
-        </form>
+        </div>
       </div>
     );
   }
