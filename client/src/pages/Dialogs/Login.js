@@ -10,8 +10,8 @@ import axios from "axios";
 
 const styles = theme => ({
   dialogPaper: {
-    minHeight: "73vh",
-    maxHeight: "73vh",
+    minHeight: "65vh",
+    maxHeight: "65vh",
     minWidth: "45vw",
     maxWidth: "45vw",
     display: "flex",

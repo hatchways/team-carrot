@@ -42,14 +42,11 @@ class ShoppingList extends Component {
               />
             );
           })}
-          <span onClick={this.handleClick.bind(this)}>
+          <span onClick={this.openShoppingList.bind(this)}>
             <EmptyCard></EmptyCard>
+            <ShoppingListDialog open={this.state.openShopping} />
           </span>
         </div>
-        <ShoppingListDialog
-          open={this.state.openShopping}
-          handleClick={this.openShoppingList.bind(this)}
-        />
       </div>
     );
   }

@@ -61,19 +61,12 @@ export default withStyles(styles)(
       const { classes } = this.props;
       return (
         <div>
-          <Button
-            variant="outlined"
-            color="primary"
-            onClick={this.handleClick.bind(this)}
-          >
-            New Shopping List
-          </Button>
           <Dialog
             classes={
               ({ paper: classes.dialogContainer },
               { paper: classes.dialogPaper })
             }
-            open={this.state.open}
+            open={this.props.open}
             onClose={this.handleClick.bind(this)}
             aria-labelledby="form-dialog-title"
           >

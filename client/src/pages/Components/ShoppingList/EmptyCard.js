@@ -10,7 +10,7 @@ const useStyles = makeStyles({
     width: 300,
     height: 350,
     margin: 10,
-    padding: 10,
+    padding: 0,
     textAlign: "center",
     boxShadow: "5px 5px 10px #cecece"
   },
@@ -25,11 +25,10 @@ export default function EmptyCard() {
 
   return (
     <Card className={classes.card}>
-      {" "}
       <CardContent className={classes.button}>
         <FontAwesome></FontAwesome>
-        <Typography gutterBottom variant="h5" component="h2">
-          Add
+        <Typography gutterBottom variant="h7" component="h3">
+          ADD NEW LIST
         </Typography>
       </CardContent>
     </Card>
