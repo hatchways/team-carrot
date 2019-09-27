@@ -8,20 +8,13 @@ class ShoppingList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      addClicked: false,
-      openShopping: false
+      addClicked: false
     };
   }
 
   handleClick() {
     this.setState({
       addClicked: !this.state.addClicked
-    });
-  }
-
-  openShoppingList() {
-    this.setState({
-      openShopping: !this.state.openShopping
     });
   }
 
@@ -42,9 +35,12 @@ class ShoppingList extends Component {
               />
             );
           })}
-          <span onClick={this.openShoppingList.bind(this)}>
+          <ShoppingListDialog
+            open={this.state.addClicked}
+            handleClick={this.handleClick.bind(this)}
+          />
+          <span onClick={this.handleClick.bind(this)}>
             <EmptyCard></EmptyCard>
-            <ShoppingListDialog open={this.state.openShopping} />
           </span>
         </div>
       </div>

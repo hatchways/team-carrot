@@ -39,18 +39,10 @@ const styles = theme => ({
 });
 
 export default withStyles(styles)(
-  class NewItem extends React.Component {
+  class ShoppingListDialog extends React.Component {
     constructor(props) {
       super(props);
-      this.state = {
-        open: this.props.open ? this.props.open : false
-      };
-    }
-
-    handleClick() {
-      this.setState({
-        open: !this.state.open
-      });
+      this.state = {};
     }
 
     handleSubmit() {
@@ -67,7 +59,7 @@ export default withStyles(styles)(
               { paper: classes.dialogPaper })
             }
             open={this.props.open}
-            onClose={this.handleClick.bind(this)}
+            onClose={this.props.handleClick}
             aria-labelledby="form-dialog-title"
           >
             <Typography gutterBottom variant="h5">
