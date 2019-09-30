@@ -14,21 +14,13 @@ export default class extends Component {
       width: "auto"
     };
 
-    // const landingTitleStyles = {
-    //   display: "flex",
-    //   justifyContent: "center",
-    //   flexDirection: "column",
-    //   alignItems: "center",
-    //   margin: "2.5vh",
-    //   color: "white",
-    //   fontSize: "1.8rem",
-    //   textAlign: "center"
-    // };
+    console.log("Props Welcome");
+    console.log(this.props);
 
     return (
       <Fragment>
         <div className="landingImg" style={styles}>
-          <Header />
+          <Header {...this.props} />
           <div className="landingTitle">
             <h1> Welcome to DealsMate.com</h1>
             <h4>Track, Save & Win! </h4>

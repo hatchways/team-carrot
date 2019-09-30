@@ -7,6 +7,7 @@ import { withStyles, createMuiTheme } from "@material-ui/core/styles";
 import Fab from "@material-ui/core/Fab";
 import { ThemeProvider } from "@material-ui/styles";
 import axios from "axios";
+import FormHelperText from "@material-ui/core/FormHelperText";
 
 const styles = theme => ({
   dialogPaper: {
@@ -54,13 +55,16 @@ const theme = createMuiTheme({
 
 export default withStyles(styles)(
   class Signin extends React.Component {
-    state = {
-      open: false,
-      data: {
-        email: "",
-        password: ""
-      }
-    };
+    constructor(props) {
+      super(props);
+      this.state = {
+        open: false,
+        data: {
+          email: "",
+          password: ""
+        }
+      };
+    }
 
     handleToggle = () => {
       this.setState({
@@ -77,22 +81,42 @@ export default withStyles(styles)(
       });
     };
 
-    handleSubmit = data => {
-      try {
-        axios
-          .post("http://localhost:4000/user/login", {
-            email: data.email,
-            password: data.password
-          })
-          .then(res => {
-            console.log(res);
-            console.log(res.data);
-            localStorage.setItem("res-jwt", res.data.token);
-          });
-      } catch (error) {
-        console.log(error);
-      }
+    handleSubmit = e => {
+      e.preventDefault();
+      const authType = "login";
+      this.props
+        .onAuth(authType, {
+          email: this.state.data.email,
+          password: this.state.data.password
+        })
+        .then(() => {
+          this.props.history.push("/dashboard");
+          // console.log("Loggged In");
+        })
+        .catch(() => {
+          return;
+        });
     };
+
+    // handleSubmit = data => {
+    //   try {
+    //     axios
+    //       .post("http://localhost:4000/user/login", {
+    //         email: data.email,
+    //         password: data.password
+    //       })
+    //       .then(res => {
+    //         console.log(res);
+    //         localStorage.setItem("res-jwt", res.data.token);
+    //       })
+    //       .catch(error => {
+    //         console.log("Enters here");
+    //         console.log(error.response);
+    //       });
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // };
 
     render() {
       const {
@@ -100,7 +124,10 @@ export default withStyles(styles)(
         data: { email, password }
       } = this.state;
 
-      const { classes } = this.props;
+      const { classes, errors } = this.props;
+
+      console.log("Props Login");
+      console.log(this.props);
 
       return (
         <Fragment>
@@ -128,10 +155,7 @@ export default withStyles(styles)(
             <form
               action="/"
               method="POST"
-              onSubmit={e => {
-                e.preventDefault();
-                this.handleSubmit(this.state.data);
-              }}
+              onSubmit={this.handleSubmit.bind(this)}
               className={classes.formWidth}
             >
               <p className={classes.textFieldHeader}>Your e-mail address:</p>
@@ -163,6 +187,14 @@ export default withStyles(styles)(
                   className={classes.FormControl}
                   inputProps={{ minLength: 6 }}
                 />
+                {errors.message && (
+                  <FormHelperText
+                    id="component-error-text"
+                    style={{ color: "red" }}
+                  >
+                    {errors.message}
+                  </FormHelperText>
+                )}
               </ThemeProvider>
 
               <DialogActions>

@@ -19,10 +19,14 @@ const styleName = {
   margin: "0 5px"
 };
 const HeaderProfile = props => {
+  console.log("Header Profile props");
+  console.log(props);
   return (
     <div style={styleContainer}>
       <img src={ProfilePicture} alt="profilePic" style={stylePic} />
-      <p style={styleName}>Smiling Guy</p>
+      <p style={styleName}>
+        {props.user.name ? props.user.name : "Smiling Guy"}
+      </p>
     </div>
   );
 };

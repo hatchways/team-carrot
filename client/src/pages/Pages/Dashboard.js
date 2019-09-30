@@ -3,6 +3,7 @@ import "./Dashboard.css";
 import DashHeader from "../Components/Layouts/DashHeader";
 import AddItem from "../Components/AddItem/AddItem";
 import ShoppingList from "../Components/ShoppingList/ShoppingList";
+import { connect } from "react-redux";
 
 class DashBoardApp extends Component {
   constructor(props) {
@@ -18,9 +19,12 @@ class DashBoardApp extends Component {
   }
 
   render() {
+    console.log("Dash Props");
+    console.log(this.props);
+
     return (
       <div>
-        <DashHeader />
+        <DashHeader {...this.props} />
         <AddItem />
         <ShoppingList shoppingList={this.state.shoppingList} />
       </div>
@@ -28,4 +32,10 @@ class DashBoardApp extends Component {
   }
 }
 
-export default DashBoardApp;
+function mapStateToProps(state) {
+  return {
+    currentUser: state.currentUser
+  };
+}
+
+export default connect(mapStateToProps)(DashBoardApp);

@@ -18,20 +18,26 @@ const styleToolbarRight = {
   justifyContent: "center"
 };
 
-export default props => (
-  <AppBar position="static">
-    <Toolbar style={styleToolbar}>
-      <div>
-        <img
-          src={logo}
-          alt="logo"
-          style={{ height: "auto", width: "300px", paddingLeft: "50px" }}
-        />
-      </div>
-      <div style={styleToolbarRight}>
-        <HeaderButtons />
-        <HeaderProfile />
-      </div>
-    </Toolbar>
-  </AppBar>
-);
+const DashHeader = props => {
+  console.log("DashHeader Props");
+  console.log(props);
+  return (
+    <AppBar position="static">
+      <Toolbar style={styleToolbar}>
+        <div>
+          <img
+            src={logo}
+            alt="logo"
+            style={{ height: "auto", width: "300px", paddingLeft: "50px" }}
+          />
+        </div>
+        <div style={styleToolbarRight}>
+          <HeaderButtons />
+          <HeaderProfile user={props.currentUser.user.payload.user} />
+        </div>
+      </Toolbar>
+    </AppBar>
+  );
+};
+
+export default DashHeader;
