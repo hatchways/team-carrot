@@ -37,7 +37,7 @@ router.post(
     const result = validationResult(req);
     console.log(req.body);
     if (result.errors.length) {
-      console.log("Enters here");
+      console.log("Enters error block 400 here");
 
       return res.status(400).json({ errors: result.errors });
     }
@@ -72,12 +72,12 @@ router.post(
         { expiresIn: 36000 },
         (err, token) => {
           if (err) throw err;
-          res.status(201).json({ token });
+          res.status(201).json({ token, payload });
         }
       );
     } catch (err) {
       console.error(err.message);
-      res.status(500).send("Server error");
+      res.status(500).json({ message: "Server error" });
     }
   }
 );
@@ -101,7 +101,9 @@ router.post(
 router.post(
   "/login",
   [
-    check("email", "Please include valid email").isEmail(),
+    check("email", "Please include valid email")
+      .normalizeEmail()
+      .isEmail(),
     check("password", "Password is required").exists()
   ],
   async (req, res) => {
@@ -115,6 +117,7 @@ router.post(
       //see if user exists
       let user = await User.findOne({ email });
       if (!user) {
+        console.log("Invalid Email");
         return res
           .status(400)
           .json({ errors: [{ msg: "invalid credentials" }] });
@@ -123,6 +126,7 @@ router.post(
       const isMatch = await bcrypt.compare(password, user.password);
 
       if (!isMatch) {
+        console.log("Invalid Pasword");
         return res
           .status(400)
           .json({ errors: [{ msg: "invalid credentials" }] });
@@ -142,7 +146,7 @@ router.post(
         (err, token) => {
           if (err) throw err;
           console.log(token);
-          res.status(200).json({ token });
+          res.status(200).json({ token, payload });
         }
       );
     } catch (err) {
