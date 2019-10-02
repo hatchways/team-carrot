@@ -4,6 +4,8 @@ import { join } from "path";
 import cookieParser from "cookie-parser";
 import logger from "morgan";
 import connectDB from "./config/db"
+import busboy from 'connect-busboy';
+import busboyBodyParser from 'busboy-body-parser';
 
 import indexRouter from "./routes/index";
 import pingRouter from "./routes/ping";
@@ -11,9 +13,13 @@ import userRouter from "./routes/user";
 import itemRouter from "./routes/item";
 
 import scraper from "./scraper/scraper";
+import listRouter from "./routes/list";
 
 var app = express();
 connectDB();
+
+app.use(busboy());
+app.use(busboyBodyParser());
 
 app.use(logger("dev"));
 app.use(json());
@@ -25,6 +31,7 @@ app.use("/", indexRouter);
 app.use("/ping", pingRouter);
 app.use("/user", userRouter);
 app.use("/item", itemRouter);
+app.use("/list", listRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -29,6 +29,13 @@ router.post('/register', [
                 throw new Error('Password confirmation does not match password');
             }
             return true;
+        }),
+        body('email').custom(async(value, { req }) => {
+            let user = await User.findOne({ value }); //goes to the user model to check whether email already exists
+            if (user) {
+                throw new Error('Email already exists');
+            }
+            return true;
         })
     ],
 
@@ -42,7 +49,7 @@ router.post('/register', [
         const { name, email, password } = req.body;
 
         try {
-            let user = await User.findOne({ email }); //goes to the user model to check whether email already exists
+            let user;
 
             user = new User({
                 name,
@@ -88,7 +95,7 @@ router.post('/register', [
 //@access   Public
 router.post(
     '/login', [
-        check('email', 'Please include valid email').isEmail(),
+        check('email', 'Please include valid email').normalizeEmail().isEmail(),
         check('password', 'Password is required').exists()
     ],
     async(req, res) => {
