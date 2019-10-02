@@ -60,9 +60,12 @@ export default withStyles(styles)(
             onClose={this.props.handleClick}
             aria-labelledby="form-dialog-title"
           >
-            <Typography margin="normal" gutterBottom variant="h4">
+            <DialogTitle id="form-dialog-title">
+              <h3 style={{ textAlign: "center" }}>Add Item</h3>
+            </DialogTitle>
+            {/* <Typography margin="normal" gutterBottom variant="h4">
               Add New Item
-            </Typography>
+            </Typography> */}
             <DialogContent>
               <Typography gutterBottom variant="h5">
                 Paste Link to Item

@@ -21,6 +21,8 @@ const styleToolbarRight = {
 const DashHeader = props => {
   console.log("DashHeader Props");
   console.log(props);
+  console.log("DashHeader Props user");
+  console.log(props.currentUser.user);
   return (
     <AppBar position="static">
       <Toolbar style={styleToolbar}>
@@ -33,7 +35,13 @@ const DashHeader = props => {
         </div>
         <div style={styleToolbarRight}>
           <HeaderButtons />
-          <HeaderProfile user={props.currentUser.user.payload.user} />
+          <HeaderProfile
+            user={
+              props.currentUser.user
+                ? { name: "Dev Default" }
+                : props.currentUser.user.payload.user
+            }
+          />
         </div>
       </Toolbar>
     </AppBar>
