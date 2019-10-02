@@ -12,7 +12,7 @@ export function setCurrentUser(user) {
 export function authUser(type, userData) {
   return dispatch => {
     return new Promise((resolve, reject) => {
-      return apiCall("post", `http://localhost:3001/user/${type}`, userData)
+      return apiCall("post", `http://localhost:4000/user/${type}`, userData)
         .then(({ token, ...payload }) => {
           localStorage.setItem("jwtToken", token);
           console.log("When login");
