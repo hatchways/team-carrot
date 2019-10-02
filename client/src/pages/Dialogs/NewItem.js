@@ -61,7 +61,7 @@ export default withStyles(styles)(
             aria-labelledby="form-dialog-title"
           >
             <DialogTitle id="form-dialog-title">
-              <h3 style={{ textAlign: "center" }}>Add Item</h3>
+              <h3 style={{ textAlign: "center" }}>Add New Item</h3>
             </DialogTitle>
             {/* <Typography margin="normal" gutterBottom variant="h4">
               Add New Item
