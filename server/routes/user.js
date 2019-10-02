@@ -30,6 +30,13 @@ router.post(
         throw new Error("Password confirmation does not match password");
       }
       return true;
+    }),
+    body("email").custom(async (value, { req }) => {
+      let user = await User.findOne({ value }); //goes to the user model to check whether email already exists
+      if (user) {
+        throw new Error("Email already exists");
+      }
+      return true;
     })
   ],
 
@@ -81,19 +88,6 @@ router.post(
     }
   }
 );
-
-// /-----------------------------------------------------------------------------------------------
-
-// router.get('/', auth, async(req, res) => {
-//     try {
-//         //use the user model to get user info except password
-//         const user = await User.findById(req.user.id).select('-password');
-//         res.json(user);
-//     } catch (err) {
-//         console.error(err.message);
-//         res.status(500).send('server error');
-//     }
-// });
 
 //@route   POST api/auth
 //@desc    Authenticate user and get token
