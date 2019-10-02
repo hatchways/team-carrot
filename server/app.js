@@ -3,6 +3,7 @@ import express, { json, urlencoded } from "express";
 import { join } from "path";
 import cookieParser from "cookie-parser";
 import logger from "morgan";
+import cors from "cors";
 import connectDB from "./config/db"
 import busboy from 'connect-busboy';
 import busboyBodyParser from 'busboy-body-parser';
@@ -26,6 +27,7 @@ app.use(json());
 app.use(urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(join(__dirname, "public")));
+app.use(cors());
 
 app.use("/", indexRouter);
 app.use("/ping", pingRouter);
