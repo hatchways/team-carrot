@@ -12,8 +12,8 @@ import FormHelperText from "@material-ui/core/FormHelperText";
 
 const styles = theme => ({
   dialogPaper: {
-    minHeight: "95vh",
-    maxHeight: "95vh",
+    minHeight: "87vh",
+    maxHeight: "87vh",
     minWidth: "45vw",
     maxWidth: "45vw",
     display: "flex",
@@ -58,17 +58,20 @@ const theme = createMuiTheme({
 
 export default withStyles(styles)(
   class SignUp extends React.Component {
-    state = {
-      open: true,
-      mismatch: false,
-      data: {
-        name: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
-        message: ""
-      }
-    };
+    constructor(props) {
+      super(props);
+      this.state = {
+        open: false,
+        mismatch: false,
+        data: {
+          name: "",
+          email: "",
+          password: "",
+          confirmPassword: "",
+          message: ""
+        }
+      };
+    }
 
     handleToggle = () => {
       this.setState({
@@ -87,8 +90,16 @@ export default withStyles(styles)(
       });
     };
 
-    handleSubmit = data => {
-      const { password, confirmPassword, message } = data;
+    handleSubmit = e => {
+      e.preventDefault();
+      const {
+        name,
+        email,
+        password,
+        confirmPassword,
+        message
+      } = this.state.data;
+      const authType = "register";
       if (password !== confirmPassword) {
         this.setState({
           mismatch: !this.state.mismatch,
@@ -98,20 +109,83 @@ export default withStyles(styles)(
           }
         });
       } else {
-        try {
-          Axios.post("/user/register", {
-            name: data.name,
-            email: data.email,
-            password: data.password,
-            confirmPassword: data.confirmPassword
-          }).then(res => {
-            console.log(res);
+        this.props
+          .onAuth(authType, {
+            name: this.state.data.name,
+            email: this.state.data.email,
+            password: this.state.data.password,
+            passwordConfirmation: this.state.data.confirmPassword
+          })
+          .then(() => {
+            this.props.history.push("/dashboard");
+          })
+          .catch(() => {
+            return;
           });
-        } catch (error) {
-          console.log(error);
-        }
       }
     };
+
+    // handleSubmit = data => {
+    //   const { password, confirmPassword, message } = data;
+    //   if (password !== confirmPassword) {
+    //     this.setState({
+    //       mismatch: !this.state.mismatch,
+    //       data: {
+    //         ...this.state.data,
+    //         message: "Password does not match"
+    //       }
+    //     });
+    //   } else {
+    //     try {
+    //       Axios.post("http://localhost:4000/user/register", {
+    //         name: data.name,
+    //         email: data.email,
+    //         password: data.password,
+    //         passwordConfirmation: data.confirmPassword
+    //       })
+    //         .then(res => {
+    //           console.log(res);
+    //           localStorage.setItem("res-jwt", res.data.token);
+    //         })
+    //         .catch(error => {
+    //           console.log(error.response);
+    //         });
+    //     } catch (error) {
+    //       console.log(error);
+    //     }
+    //   }
+    // };
+
+    // handleSubmit = data => {
+    //   const { password, confirmPassword, message } = data;
+    //   if (password !== confirmPassword) {
+    //     this.setState({
+    //       mismatch: !this.state.mismatch,
+    //       data: {
+    //         ...this.state.data,
+    //         message: "Password does not match"
+    //       }
+    //     });
+    //   } else {
+    //     try {
+    //       Axios.post("http://localhost:4000/user/register", {
+    //         name: data.name,
+    //         email: data.email,
+    //         password: data.password,
+    //         passwordConfirmation: data.confirmPassword
+    //       })
+    //         .then(res => {
+    //           console.log(res);
+    //           localStorage.setItem("res-jwt", res.data.token);
+    //         })
+    //         .catch(error => {
+    //           console.log(error.response);
+    //         });
+    //     } catch (error) {
+    //       console.log(error);
+    //     }
+    //   }
+    // };
 
     render() {
       const {
@@ -120,7 +194,10 @@ export default withStyles(styles)(
         data: { name, email, password, confirmPassword, message }
       } = this.state;
 
-      const { classes } = this.props;
+      const { classes, errors } = this.props;
+
+      console.log("Props Signup");
+      console.log(this.props);
 
       return (
         <Fragment>
@@ -151,10 +228,7 @@ export default withStyles(styles)(
             <form
               action="/"
               method="POST"
-              onSubmit={e => {
-                e.preventDefault();
-                this.handleSubmit(this.state.data);
-              }}
+              onSubmit={this.handleSubmit.bind(this)}
               className={classes.formWidth}
             >
               <p className={classes.textFieldHeader}>Your Name:</p>
@@ -218,6 +292,14 @@ export default withStyles(styles)(
                   />
                   <FormHelperText id="component-error-text">
                     {message}
+                    {errors.message && (
+                      <FormHelperText
+                        id="component-error-text"
+                        style={{ color: "red" }}
+                      >
+                        {errors.message}
+                      </FormHelperText>
+                    )}
                   </FormHelperText>
                 </FormControl>
               </ThemeProvider>
