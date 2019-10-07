@@ -66,4 +66,17 @@ router.post('/', auth, (req, res, next) => {
     });
     req.pipe(busboy);
 });
+
+
+router.get('/', auth, async(req, res, next) => {
+    try {
+        const lists = await List.find({
+            user: req.user.id,
+        });
+        res.json(lists);
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send("server error");
+    }
+});
 module.exports = router
