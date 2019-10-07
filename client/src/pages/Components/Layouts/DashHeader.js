@@ -37,7 +37,7 @@ const DashHeader = props => {
           <HeaderButtons />
           <HeaderProfile
             user={
-              props.currentUser.user
+              Object.keys(props.currentUser.user).length === 0
                 ? { name: "Dev Default" }
                 : props.currentUser.user.payload.user
             }

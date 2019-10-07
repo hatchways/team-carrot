@@ -4,18 +4,23 @@ import DashHeader from "../Components/Layouts/DashHeader";
 import AddItem from "../Components/AddItem/AddItem";
 import ShoppingList from "../Components/ShoppingList/ShoppingList";
 import { connect } from "react-redux";
+import { addList } from "../../stores/actions/ShoppingListActions";
 
 class DashBoardApp extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      shoppingList: [
-        { name: "Clothes", img: "Clothes.png", items: [{}, {}, {}] },
-        { name: "Furniture", img: "Furniture.png", items: [{}, {}, {}] },
-        { name: "Luxury", img: "Watches.png", items: [{}, {}, {}] }
-      ],
+      shoppingList: this.props.shoppingList,
+      test: "",
       openNewItem: false
     };
+  }
+
+  componentDidMount() {
+    setTimeout(() => {
+      this.props.dispatch(addList("John Cena"));
+      console.log(this.state);
+    }, 10 * 1000);
   }
 
   render() {
@@ -34,7 +39,8 @@ class DashBoardApp extends Component {
 
 function mapStateToProps(state) {
   return {
-    currentUser: state.currentUser
+    currentUser: state.currentUser,
+    shoppingList: state.shoppingList // left size is the state of this comp while right side is from redux
   };
 }
 

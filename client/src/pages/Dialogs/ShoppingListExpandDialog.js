@@ -3,11 +3,12 @@ import Button from "@material-ui/core/Button";
 import { withStyles, createMuiTheme } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
-import DialogTitle from "@material-ui/core/DialogTitle";
 import MenuItem from "@material-ui/core/MenuItem";
 import DialogActions from "@material-ui/core/DialogActions";
 import Fab from "@material-ui/core/Fab";
 import { apiCallWithHeader } from "../../services/apiHeaders";
+import "./ShoppingListExpandDialog.css";
+import EachItemInList from "./EachItemInList";
 
 const styles = theme => ({
   dialogPaper: {
@@ -18,7 +19,8 @@ const styles = theme => ({
     display: "flex",
     textAlign: "center",
     margin: "10px",
-    padding: 20
+    padding: 20,
+    backgroundColor: "#FBFCFF"
   },
   formWidth: {
     width: "100%",
@@ -45,12 +47,13 @@ const styles = theme => ({
   buttonStyles: {
     width: "200px",
     background: "#DF1B1B",
-    marginTop: "35px",
+    marginTop: "15px",
+    marginBottom: "15px",
     color: "white"
   }
 });
 
-class NewItem extends React.Component {
+class ShoppingListExpandDialog extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -109,7 +112,22 @@ class NewItem extends React.Component {
 
   render() {
     const { link, list, selectedFromList } = this.state;
-    const { classes } = this.props;
+    const { classes, name, items } = this.props;
+    console.log("ShoppingListExppandProps");
+    console.log(this.props);
+
+    const allitems = items.map((item, index) => {
+      return (
+        <EachItemInList
+          key={index}
+          name={item.name}
+          link={item.link}
+          img={item.img}
+          oldPrice={item.oldPrice}
+          newPrice={item.newPrice}
+        />
+      );
+    });
 
     const dropdown = list.map((item, index) => {
       return (
@@ -128,53 +146,17 @@ class NewItem extends React.Component {
     return (
       <div>
         <Dialog
-          classes={
-            ({ paper: classes.dialogContainer }, { paper: classes.dialogPaper })
-          }
+          classes={{ paper: classes.dialogPaper }}
           open={this.props.open}
           onClose={this.props.handleClick}
           aria-labelledby="form-dialog-title"
         >
-          <DialogTitle id="form-dialog-title">
-            <h3 style={{ textAlign: "center" }}>Add New Item</h3>
-          </DialogTitle>
-
-          <form
-            action="/"
-            method="POST"
-            onSubmit={this.handleSubmit.bind(this)}
-            className={classes.formWidth}
-          >
-            <p className={classes.textFieldHeader}>Paste link to your item:</p>
-            <TextField
-              id="outlined-link"
-              label="Link"
-              value={link}
-              type="text"
-              name="link"
-              margin="normal"
-              variant="outlined"
-              className={classes.FormControl}
-              onChange={this.handleChange}
-            />
-            <br />
-
-            {/* -=-==---------------------------------------------------------------------------------------------------------------------------------- */}
-            <p className={classes.textFieldHeader}>Select list:</p>
-            <TextField
-              select
-              label={selectedFromList === "" ? "Select" : ""}
-              className={classes.textFieldDropdown}
-              value={selectedFromList}
-              onChange={this.handleChangeDropdown}
-              InputLabelProps={{ shrink: false }}
-              margin="normal"
-              variant="outlined"
-            >
-              {dropdown}
-            </TextField>
-
-            {/* -=-==---------------------------------------------------------------------------------------------------------------------------------- */}
+          <div className="Expand-Dialog-Container">
+            <h2 className="Expand-Dialog-Title">{name}</h2>
+            <p className="Expand-Dialog-Subtitle">
+              {items.length + " " + "Items"}
+            </p>
+            <div className="Expand-Dialog-Content-Container">{allitems}</div>
             <DialogActions>
               <Fab
                 type="submit"
@@ -186,26 +168,11 @@ class NewItem extends React.Component {
                 Add Item
               </Fab>
             </DialogActions>
-          </form>
+          </div>
         </Dialog>
       </div>
     );
   }
 }
 
-export default withStyles(styles)(NewItem);
-
-{
-  /* <TextField
-              select
-              label={selectedFromList === "" ? "Select" : ""}
-              value={selectedFromList}
-              onChange={this.handleChangeDropdown}
-              InputLabelProps={{ shrink: false }}
-              className={classes.selectTextField}
-              variant="outlined"
-              margin="normal"
-            >
-              {dropdown}
-            </TextField> */
-}
+export default withStyles(styles)(ShoppingListExpandDialog);
