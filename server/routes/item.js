@@ -10,7 +10,6 @@ const router = express.Router();
 
 // creating Item 
 router.post('/scrapeItem', auth, [
-
         check('url', 'Please enter correct url')
         .isURL()
     ],
@@ -18,14 +17,15 @@ router.post('/scrapeItem', auth, [
         try {
             scraper.getProductContent(req.body.url)
                 .then((product) => {
-                    res.status(200).send(product)
+                    res.status(200).send(product);
                 });
 
         } catch (err) {
             console.log(err.message);
             res.status(500).send("server error");
         }
-    });
+    }
+);
 
 router.post('/storeItem', auth, [
     check('name', 'Name is required')
