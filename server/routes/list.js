@@ -24,7 +24,7 @@ router.post('/', auth, (req, res, next) => {
         s3.createBucket(function() {
             const params = {
                 Bucket: process.env.BUCKET_NAME, // pass your bucket name
-                Key: file.name, // file will be saved as testBucket/contacts.csv
+                Key: req.body.name,
                 Body: JSON.stringify(file, null, 2)
             };
             s3.upload(params, function(s3Err, data) {
@@ -33,7 +33,7 @@ router.post('/', auth, (req, res, next) => {
 
                 const url = s3.getSignedUrl('getObject', {
                     Bucket: process.env.BUCKET_NAME,
-                    Key: file.name
+                    Key: req.body.name
                 })
 
 
@@ -41,7 +41,7 @@ router.post('/', auth, (req, res, next) => {
                     const newList = new List({
                         user: req.user.id,
                         url: url,
-                        name: file.name
+                        name: req.body.name
                     });
 
                     const list = newList.save().then((list) => {
@@ -55,13 +55,9 @@ router.post('/', auth, (req, res, next) => {
                     res.status(500).send("server error");
                 }
 
-
             });
 
-
         })
-
-
 
     });
     req.pipe(busboy);
