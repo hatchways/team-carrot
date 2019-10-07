@@ -1,0 +1,19 @@
+.landingTitle {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  margin: 4vh;
+  color: white;
+  font-family: "Acme", sans-serif;
+  font-size: 1.8rem;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 8px;
+  /* text-shadow: 4px 3px 0 #7a7a7a; */
+  text-shadow: 4px 4px 2px rgba(0, 0, 0, 0.6);
+}
+
+.landingTitle h4 {
+  margin: 0px;
+}

@@ -1,0 +1,49 @@
+.additem-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 8vh;
+  width: 100%;
+}
+
+.additem-container label {
+  margin: 0 auto;
+  padding: 2vh;
+}
+
+.additem-first-input {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  box-shadow: 5px 5px 10px #cecece;
+  border-radius: 30px;
+}
+
+.additem-link-input {
+  flex-grow: 2;
+  width: 30%;
+  --padding: 15px;
+  font-size: 20px;
+  outline: none;
+  padding: var(--padding);
+  border: 1px solid white;
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
+  background-color: white;
+}
+
+.additem-button {
+  flex-grow: 1;
+  font-size: 15px;
+  color: white;
+  background-color: #df1b1b;
+  width: 10%;
+  border-radius: 30px;
+  border: none;
+}
+
+.additem-button:hover {
+  background-color: #cb1919;
+  cursor: pointer;
+}
