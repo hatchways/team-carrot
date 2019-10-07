@@ -7,13 +7,16 @@ const ItemSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'users'
     },
+    list: {
+        type: Schema.Types.ObjectId,
+        ref: 'lists'
+    },
     url: {
         type: String,
         required: true
     },
     name: {
-        type: String,
-        required: true
+        type: String
     },
     prices: {
         type: [{
@@ -23,7 +26,6 @@ const ItemSchema = new Schema({
             },
             value: Number
         }],
-        required: true
     }
 });
 
