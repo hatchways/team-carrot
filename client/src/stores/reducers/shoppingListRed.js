@@ -3,7 +3,7 @@ import { ADD_LIST } from "../actionTypes";
 const DEFAULT_STATE = [
   {
     name: "Shoes",
-    img: "shoe1.jpg",
+    img: "ShoeCover.jpg",
     items: [
       {
         name: "Adidas UltraBoost",
@@ -22,7 +22,7 @@ const DEFAULT_STATE = [
         img: "shoe2.jpg"
       },
       {
-        name: "Adidas UltraBoost",
+        name: "Puma Predator",
         link:
           "https://www.amazon.ca/adidas-Performance-Ultra-Boost-Running/dp/B00ZWUITRO?th=1",
         oldPrice: "90",
@@ -32,48 +32,48 @@ const DEFAULT_STATE = [
     ]
   },
   {
-    name: "Kitchen Stuff",
+    name: "Furniture",
     img: "Furniture.png",
     items: [
       {
-        name: "Adidas UltraBost",
+        name: "Blue Sofa",
         link:
           "https://www.amazon.ca/adidas-Performance-Ultra-Boost-Running/dp/B00ZWUITRO?th=1",
         oldPrice: "90",
         newPrice: "45",
-        img: "shoe1.jpg"
+        img: "Furniture1.jpg"
       },
       {
-        name: "Adidas UltraBost",
+        name: "Gray Sofa",
         link:
           "https://www.amazon.ca/adidas-Performance-Ultra-Boost-Running/dp/B00ZWUITRO?th=1",
         oldPrice: "90",
         newPrice: "45",
-        img: ".jpg"
+        img: "Furniture2.jpg"
       },
       {
-        name: "Adidas UltraBost",
+        name: "Wardrobe",
         link:
           "https://www.amazon.ca/adidas-Performance-Ultra-Boost-Running/dp/B00ZWUITRO?th=1",
         oldPrice: "90",
         newPrice: "45",
-        img: "shoe3.jpg"
+        img: "Furniture3.jpg"
       },
       {
-        name: "Adidas UltraBost",
+        name: "Coffee Table",
         link:
           "https://www.amazon.ca/adidas-Performance-Ultra-Boost-Running/dp/B00ZWUITRO?th=1",
         oldPrice: "90",
         newPrice: "45",
-        img: "shoe3.jpg"
+        img: "Furniture4.jpg"
       },
       {
-        name: "Adidas UltraBost",
+        name: "Arm Chair",
         link:
           "https://www.amazon.ca/adidas-Performance-Ultra-Boost-Running/dp/B00ZWUITRO?th=1",
         oldPrice: "90",
         newPrice: "45",
-        img: "shoe3.jpg"
+        img: "Furniture5.jpg"
       }
     ]
   },
@@ -82,20 +82,20 @@ const DEFAULT_STATE = [
     img: "Watches.png",
     items: [
       {
-        name: "Adidas UltraBost",
+        name: "Timex Weekender",
         link:
           "https://www.amazon.ca/adidas-Performance-Ultra-Boost-Running/dp/B00ZWUITRO?th=1",
         oldPrice: "90",
         newPrice: "45",
-        img: "shoe1.jpg"
+        img: "watches1.jpg"
       },
       {
-        name: "Adidas UltraBost",
+        name: "Tissot",
         link:
           "https://www.amazon.ca/adidas-Performance-Ultra-Boost-Running/dp/B00ZWUITRO?th=1",
         oldPrice: "90",
         newPrice: "45",
-        img: "shoe2.jpg"
+        img: "watches2.jpg"
       }
     ]
   }
