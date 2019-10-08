@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { number } from 'prop-types';
+
 
 const Schema = mongoose.Schema();
 

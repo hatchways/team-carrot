@@ -23,9 +23,12 @@ const getProductContent = (siteUrl) => {
         const pictureUrl = await page.evaluate('document.querySelector("#imgTagWrapperId img").getAttribute("src")');
         await browser.close();
         resolve({
-            title: productTitle,
-            price: productPrice,
-            pictureUrl: pictureUrl
+            name: productTitle,
+            prices: [{
+                price: productPrice,
+                date: new Date()
+            }],
+            url: pictureUrl
         });
     });
     return promise;
