@@ -8,28 +8,37 @@ const getProductContent = (siteUrl) => {
         });
         const page = await browser.newPage();
         await page.goto(siteUrl);
-        const html = await page.content();
 
-        const productTitle = cheerio('#productTitle', html).text().trim();
+        const productTitle = await page.evaluate('document.querySelector("#productTitle").innerText');
         let productPrice;
-        if (await page.$('#priceblock_dealprice') !== null) {
-            productPrice = cheerio('#priceblock_dealprice', html).text();
-        } else if (await page.$('#priceblock_ourprice') !== null) {
-            productPrice = cheerio('#priceblock_ourprice', html).text();
-        } else {
-            console.log("cannot exists");
-        }
+        productPrice = await page.evaluate(() => {
+            if (document.querySelector('#priceblock_dealprice') !== null) {
+                return document.querySelector('#priceblock_dealprice').innerText;
+            } else if (document.querySelector('#priceblock_ourprice') !== null) {
+                return document.querySelector('#priceblock_ourprice').innerText;
+            } else if (document.querySelector('#olp-new .a-color-price') != null) {
+                return document.querySelector('#olp-new .a-color-price').innerText;
+            } else if (document.querySelector('#priceblock_saleprice') != null) {
+                return document.querySelector('#priceblock_saleprice').innerText;
+            } else {
+                return null;
+            }
+        });
+        const pictureURL = await page.evaluate(() => {
+            return document.querySelector('#imgTagWrapperId img').src;
+        });;
 
-        const pictureUrl = await page.evaluate('document.querySelector("#imgTagWrapperId img").getAttribute("src")');
         await browser.close();
-        resolve({
+        const product = {
             name: productTitle,
             prices: [{
-                price: productPrice,
+                value: productPrice,
                 date: new Date()
             }],
-            url: pictureUrl
-        });
+            url: pictureURL
+        };
+        console.log(product);
+        resolve(product);
     });
     return promise;
 }
