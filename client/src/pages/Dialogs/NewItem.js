@@ -8,6 +8,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import DialogActions from "@material-ui/core/DialogActions";
 import Fab from "@material-ui/core/Fab";
 import { apiCallWithHeader } from "../../services/apiHeaders";
+import { connect } from "react-redux";
 
 const styles = theme => ({
   dialogPaper: {
@@ -60,9 +61,11 @@ class NewItem extends React.Component {
         { name: "Clothes" },
         { name: "Furniture" },
         { name: "Games" },
-        { name: "Gadgets" }
+        { name: "Gadgets" },
+        { name: "Watches.png" }
       ],
-      selectedFromList: ""
+      selectedFromList: "",
+      holdItemDetails: {}
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -82,16 +85,14 @@ class NewItem extends React.Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    const type = "item";
+    const type = "scrapeItem";
     const userData = {
-      name: "TempField",
-      prices: [{ value: "20" }, { value: "30" }],
       url: this.state.link
+      // name: this.state.selectedFromList
     };
 
     const headers = {
       headers: {
-        // "Content-Type": "application/json",
         "x-auth-token": localStorage.getItem("jwtToken")
       }
     };
@@ -99,12 +100,16 @@ class NewItem extends React.Component {
     console.log(headers.headers["x-auth-token"].length);
     console.log(localStorage.getItem("jwtToken").length);
 
-    apiCallWithHeader(
-      "post",
-      `http://localhost:4000/${type}`,
-      userData,
-      headers
-    );
+    this.props.sendURL(userData, headers);
+
+    // apiCallWithHeader(
+    //   "post",
+    //   `http://localhost:4000/item/${type}`,
+    //   userData,
+    //   headers
+    // ).then(res => {
+    //   console.log(res);
+    // });
   };
 
   render() {
@@ -192,6 +197,18 @@ class NewItem extends React.Component {
     );
   }
 }
+
+// export default connect(
+//   mapStateToProps,
+//   { sendNewItemUrl }
+// )(NewItem);
+
+// export default withStyles(styles)(
+//   connect(
+//     mapStateToProps,
+//     { sendUrl }
+//   )(NewItem)
+// );
 
 export default withStyles(styles)(NewItem);
 

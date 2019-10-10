@@ -76,7 +76,15 @@ export default withStyles(styles)(
         `http://localhost:4000/${type}`,
         formData,
         headers
-      );
+      ).then(res => {
+        if (res.status === 200) {
+          this.props.handleClick();
+          this.props.onSubmit();
+          console.log(res.status);
+        } else {
+          console.log("error");
+        }
+      });
     }
 
     handleChange(e) {

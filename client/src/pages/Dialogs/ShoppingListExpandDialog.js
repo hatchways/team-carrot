@@ -9,6 +9,8 @@ import Fab from "@material-ui/core/Fab";
 import { apiCallWithHeader } from "../../services/apiHeaders";
 import "./ShoppingListExpandDialog.css";
 import EachItemInList from "./EachItemInList";
+import { connect } from "react-redux";
+import { loadEachItemInShoppingList } from "../../stores/actions/getItemInEachShoppingList";
 
 const styles = theme => ({
   dialogPaper: {
@@ -65,11 +67,38 @@ class ShoppingListExpandDialog extends React.Component {
         { name: "Games" },
         { name: "Gadgets" }
       ],
-      selectedFromList: ""
+      selectedFromList: "",
+      currentItemsInEachShoppingList: ""
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChangeDropdown = this.handleChangeDropdown.bind(this);
+    this.getItems = this.getItems.bind(this);
+  }
+
+  getItems() {
+    console.log("Expand did mount");
+    const headers = {
+      headers: {
+        "x-auth-token": localStorage.getItem("jwtToken")
+      }
+    };
+    const listName = this.props.listName;
+
+    this.props.loadEachItemInShoppingList(headers, listName).then(() => {
+      // console.log("This is the list name");
+      // console.log(listName);
+      this.setState(
+        {
+          currentItemsInEachShoppingList: this.props
+            .currentItemsInEachShoppingList.items
+        },
+        () => {
+          console.log("Current State of Expand Dialog");
+          console.log(this.state);
+        }
+      );
+    });
   }
 
   handleChange(e) {
@@ -111,37 +140,32 @@ class ShoppingListExpandDialog extends React.Component {
   };
 
   render() {
-    const { link, list, selectedFromList } = this.state;
-    const { classes, name, items } = this.props;
+    // if (!this.state.currentItemsInEachShoppingList.length) return null;
+    const {
+      link,
+      list,
+      selectedFromList,
+      currentItemsInEachShoppingList
+    } = this.state;
+    const { classes, listName } = this.props;
     console.log("ShoppingListExppandProps");
     console.log(this.props);
 
-    const allitems = items.map((item, index) => {
-      return (
-        <EachItemInList
-          key={index}
-          name={item.name}
-          link={item.link}
-          img={item.img}
-          oldPrice={item.oldPrice}
-          newPrice={item.newPrice}
-        />
-      );
-    });
+    console.log("ShoppingListExppandPropsInitialstate");
+    console.log(this.state);
 
-    const dropdown = list.map((item, index) => {
-      return (
-        <MenuItem
-          key={index}
-          label="Select"
-          value={item.name}
-          name={item.name}
-          className={classes.menuDropdown}
-        >
-          {item.name}
-        </MenuItem>
-      );
-    });
+    // const allitems = currentItemsInEachShoppingList.map((item, index) => {
+    //   return (
+    //     <EachItemInList
+    //       key={index}
+    //       name={item.name}
+    //       link={item.url}
+    //       // img={item.img}
+    //       // oldPrice={item.oldPrice}
+    //       // newPrice={item.newPrice}
+    //     />
+    //   );
+    // });
 
     return (
       <div>
@@ -150,13 +174,28 @@ class ShoppingListExpandDialog extends React.Component {
           open={this.props.open}
           onClose={this.props.handleClick}
           aria-labelledby="form-dialog-title"
+          onEnter={this.getItems}
         >
           <div className="Expand-Dialog-Container">
-            <h2 className="Expand-Dialog-Title">{name}</h2>
-            <p className="Expand-Dialog-Subtitle">
+            <h2 className="Expand-Dialog-Title">{listName}</h2>
+            {/* <p className="Expand-Dialog-Subtitle">
               {items.length + " " + "Items"}
-            </p>
-            <div className="Expand-Dialog-Content-Container">{allitems}</div>
+            </p> */}
+            <div className="Expand-Dialog-Content-Container">
+              {currentItemsInEachShoppingList &&
+                currentItemsInEachShoppingList.map((item, index) => {
+                  return (
+                    <EachItemInList
+                      key={index}
+                      name={item.name}
+                      link={item.url}
+                      // img={item.img}
+                      // oldPrice={item.oldPrice}
+                      // newPrice={item.newPrice}
+                    />
+                  );
+                })}
+            </div>
             <DialogActions>
               <Fab
                 type="submit"
@@ -175,4 +214,18 @@ class ShoppingListExpandDialog extends React.Component {
   }
 }
 
-export default withStyles(styles)(ShoppingListExpandDialog);
+function mapStateToProps(state) {
+  return {
+    currentUser: state.currentUser,
+    shoppingList: state.shoppingList, // left size is the state of this comp while right side is from redux
+    currentShoppingList: state.currentShoppingList,
+    currentItemsInEachShoppingList: state.currentItemsInEachShoppingList
+  };
+}
+
+// export default withStyles(styles)(ShoppingListExpandDialog);
+
+export default connect(
+  mapStateToProps,
+  { loadEachItemInShoppingList }
+)(ShoppingListExpandDialog);

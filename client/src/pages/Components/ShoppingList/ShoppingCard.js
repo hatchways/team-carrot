@@ -33,9 +33,16 @@ class ShoppingCard extends Component {
   }
 
   handleClick(e) {
-    this.setState({
-      addClicked: !this.state.addClicked
-    });
+    console.log("Exand dialog clicked");
+    this.setState(
+      {
+        addClicked: !this.state.addClicked
+      },
+      () => {
+        console.log("This is add clicked");
+        console.log(this.state.addClicked);
+      }
+    );
   }
 
   render() {
@@ -51,7 +58,12 @@ class ShoppingCard extends Component {
                 title={this.props.name}
               />
               <CardContent>
-                <Typography gutterBottom variant="h5" component="h2">
+                <Typography
+                  gutterBottom
+                  variant="h6"
+                  component="h4"
+                  align="center"
+                >
                   {this.props.name}
                 </Typography>
                 <Typography variant="body2" color="textSecondary" component="p">
@@ -65,6 +77,7 @@ class ShoppingCard extends Component {
           open={this.state.addClicked}
           handleClick={this.handleClick}
           {...this.props}
+          listName={this.props.name}
         />
       </div>
     );
