@@ -5,6 +5,8 @@ import List from '../models/List';
 import { check, validationResult, body, param } from 'express-validator';
 import auth from '../middleware/auth';
 import scraper from '../scraper/scraper'
+import notification from '../notification/notification';
+import Notification from '../models/Notification';
 
 const router = express.Router();
 
@@ -63,6 +65,8 @@ router.post('/storeItem', auth, [
             name: req.body.name,
             prices: req.body.prices
         });
+
+
 
         const item = await newItem.save();
         res.status(200).send({

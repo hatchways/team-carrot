@@ -1,7 +1,6 @@
 import mongoose from 'mongoose';
 
-
-const Schema = mongoose.Schema();
+const Schema = mongoose.Schema;
 
 const NotificationSchema = new Schema({
     item: {
@@ -19,3 +18,6 @@ const NotificationSchema = new Schema({
         type: Number
     }
 })
+
+const Notification = mongoose.model('notification', NotificationSchema);
+module.exports = Notification;

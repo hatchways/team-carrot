@@ -12,8 +12,8 @@ import indexRouter from "./routes/index";
 import pingRouter from "./routes/ping";
 import userRouter from "./routes/user";
 import itemRouter from "./routes/item";
+import notificationRouter from "./routes/notification";
 
-import scraper from "./scraper/scraper";
 import listRouter from "./routes/list";
 import cronJob from "./cronjob/cron";
 
@@ -35,6 +35,7 @@ app.use("/ping", pingRouter);
 app.use("/user", userRouter);
 app.use("/item", itemRouter);
 app.use("/list", listRouter);
+app.use("/notification", notificationRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
