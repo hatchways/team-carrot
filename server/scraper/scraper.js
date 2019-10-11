@@ -9,7 +9,7 @@ const getProductContent = (siteUrl) => {
         const page = await browser.newPage();
         await page.goto(siteUrl);
 
-        const productTitle = await page.evaluate('document.querySelector("#productTitle").innerText');
+        const productTitle = await page.evaluate(() => 'document.querySelector("#productTitle").innerText');
         let productPrice;
         productPrice = await page.evaluate(() => {
             if (document.querySelector('#priceblock_dealprice') !== null) {
