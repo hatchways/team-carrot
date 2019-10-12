@@ -1,6 +1,5 @@
 import cron from 'node-cron';
 import Item from '../models/Item';
-import auth from '../middleware/auth';
 import scraper from '../scraper/scraper';
 import notification from '../notification/notification';
 
