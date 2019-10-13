@@ -15,6 +15,9 @@ const ItemSchema = new Schema({
         type: String,
         required: true
     },
+    pictureUrl: {
+        type: String
+    },
     name: {
         type: String
     },

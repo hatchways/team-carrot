@@ -67,7 +67,7 @@ router.post('/', auth, (req, res, next) => {
 router.get('/', auth, async(req, res, next) => {
     try {
         const lists = await List.find({
-            user: req.user.id,
+            user: req.user.id
         });
         res.json(lists);
     } catch (err) {

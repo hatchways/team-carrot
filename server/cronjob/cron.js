@@ -1,8 +1,7 @@
 import cron from 'node-cron';
 import Item from '../models/Item';
-import auth from '../middleware/auth';
 import scraper from '../scraper/scraper';
-//impo
+import notification from '../notification/notification';
 
 const startCronJob = async() => {
     const cronJob = cron.schedule('*/30 * * * * *', async() => {
@@ -20,6 +19,7 @@ const startCronJob = async() => {
                     prices.push(item.prices[0]);
                     const result = await Item.updateOne({ _id: element._id }, { prices: prices });
                     console.log(result);
+                    notification.createNotification(element._id, element.prices[element.prices.length - 2].value, element.prices[element.prices.length - 1].value)
                 }
             });
 

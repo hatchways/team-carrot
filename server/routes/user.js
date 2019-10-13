@@ -7,8 +7,8 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import config from "config";
 import { check, validationResult, body } from "express-validator";
-import auth from "../middleware/auth";
 import User from "../models/User";
+import Notification from '../models/Notification';
 
 const router = express.Router();
 
@@ -122,11 +122,15 @@ router.post(
                     .status(400)
                     .json({ errors: [{ msg: "invalid credentials" }] });
             }
+            // getting notification from the database
+            let notifications = await Notification.find({ user: user.id });
+
             //get user info for payload from mongo
             const payload = {
                 user: {
                     id: user.id,
-                    name: user.name
+                    name: user.name,
+                    notifications: notifications
                 }
             };
 

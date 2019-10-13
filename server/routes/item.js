@@ -5,6 +5,8 @@ import List from '../models/List';
 import { check, validationResult, body, param } from 'express-validator';
 import auth from '../middleware/auth';
 import scraper from '../scraper/scraper'
+import notification from '../notification/notification';
+import Notification from '../models/Notification';
 
 const router = express.Router();
 
@@ -17,7 +19,7 @@ router.post('/scrapeItem', auth, [
         try {
             scraper.getProductContent(req.body.url)
                 .then((product) => {
-                    res.status(200).send(product);
+                    res.status(200).send({...product, url: req.body.url });
                 });
 
         } catch (err) {
@@ -55,14 +57,18 @@ router.post('/storeItem', auth, [
         return res.status(400).json({ errors: result.errors })
     }
 
+
     try {
         const newItem = new Item({
             user: req.user.id,
             url: req.body.url,
+            pictureUrl: req.body.pictureUrl,
             list: req.list.id,
             name: req.body.name,
             prices: req.body.prices
         });
+
+
 
         const item = await newItem.save();
         res.status(200).send({
