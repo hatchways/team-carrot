@@ -207,12 +207,12 @@ class ShoppingListExpandDialog extends React.Component {
                       key={index}
                       name={item.name}
                       link={item.url}
-                      img={item.img}
+                      img={item.pictureUrl}
                       oldPrice={
-                        item.prices.length > 2 &&
-                        item.prices[item.prices.length - 2].value
+                        item.prices.length > 1 &&
+                        "$" + item.prices[item.prices.length - 2].value
                       }
-                      newPrice={item.prices[item.prices.length - 1].value}
+                      newPrice={"$" + item.prices[item.prices.length - 1].value}
                     />
                   );
                 })}

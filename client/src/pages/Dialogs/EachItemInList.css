@@ -11,10 +11,19 @@
   border-radius: 10px;
 }
 
-.EachItem-img {
-  width: 120px;
-  height: 120px;
+.EachItem-img-container {
+  width: 80px;
+  height: 80px;
+  display: flex;
+  justify-content: center;
   padding-top: 2px;
+  padding-right: 10px;
+  padding-left: 10px;
+}
+
+.EachItem-img {
+  width: auto;
+  height: 80px;
 }
 
 .EachItem-name p {
@@ -26,6 +35,10 @@
 .EachItem-name #name {
   font-weight: bold;
   font-size: 1.1em;
+  width: 400px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .EachItem-name #link {

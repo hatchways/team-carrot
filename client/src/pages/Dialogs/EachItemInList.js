@@ -6,7 +6,7 @@ class EachItemInList extends Component {
     return (
       <div>
         <div className="EachItem-Container">
-          <div>
+          <div className="EachItem-img-container">
             <img className="EachItem-img" src={this.props.img} alt="img"></img>
           </div>
           <div>
@@ -14,8 +14,8 @@ class EachItemInList extends Component {
               <p id="name">{this.props.name}</p>
               <p id="link">{this.props.link}</p>
               <span className="EachItem-price">
-                <p id="oldPrice">${this.props.oldPrice}</p>
-                <p id="newPrice">${this.props.newPrice}</p>
+                <p id="oldPrice">{this.props.oldPrice}</p>
+                <p id="newPrice">{this.props.newPrice}</p>
               </span>
             </span>
           </div>
