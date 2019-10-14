@@ -5,6 +5,9 @@ import AddItem from "../Components/AddItem/AddItem";
 import ShoppingList from "../Components/ShoppingList/ShoppingList";
 import { connect } from "react-redux";
 import { loadShoppingList } from "../../stores/actions/getList";
+import { configureStore } from "../../stores";
+
+const store = configureStore();
 
 class DashBoardApp extends Component {
   constructor(props) {
@@ -30,17 +33,18 @@ class DashBoardApp extends Component {
   render() {
     console.log("Dash Props");
     console.log(this.props);
+    console.log("Dash State");
     console.log(this.state);
 
     return (
       <div>
         <DashHeader {...this.props} />
-        <AddItem />
+        <AddItem store={store} shoppingList={this.state.shoppingList} />
         <ShoppingList
           onSubmit={this.componentDidMount.bind(this)}
           shoppingList={this.state.shoppingList}
+          store={store}
         />
-        {/* <ShoppingList /> */}
       </div>
     );
   }
@@ -50,7 +54,8 @@ function mapStateToProps(state) {
   return {
     currentUser: state.currentUser,
     shoppingList: state.shoppingList, // left size is the state of this comp while right side is from redux
-    currentShoppingList: state.currentShoppingList
+    currentShoppingList: state.currentShoppingList,
+    currentItemUrl: state.currentItemUrl
   };
 }
 

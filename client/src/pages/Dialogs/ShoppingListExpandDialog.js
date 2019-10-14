@@ -11,10 +11,12 @@ import "./ShoppingListExpandDialog.css";
 import EachItemInList from "./EachItemInList";
 import { connect } from "react-redux";
 import { loadEachItemInShoppingList } from "../../stores/actions/getItemInEachShoppingList";
+import NewItem from "./NewItem";
+import { sendUrl } from "../../stores/actions/sendURLGetItemInfo";
 
 const styles = theme => ({
   dialogPaper: {
-    minHeight: "60vh",
+    minHeight: "auto",
     maxHeight: "60vh",
     minWidth: "45vw",
     maxWidth: "45vw",
@@ -59,6 +61,7 @@ class ShoppingListExpandDialog extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      addClicked: false,
       link: "",
       list: [
         { name: "Luxury" },
@@ -68,8 +71,10 @@ class ShoppingListExpandDialog extends React.Component {
         { name: "Gadgets" }
       ],
       selectedFromList: "",
-      currentItemsInEachShoppingList: ""
+      currentItemsInEachShoppingList: "",
+      currentItemUrl: ""
     };
+    this.handleClick = this.handleClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChangeDropdown = this.handleChangeDropdown.bind(this);
@@ -103,6 +108,12 @@ class ShoppingListExpandDialog extends React.Component {
 
   handleChange(e) {
     this.setState({ [e.target.name]: e.target.value });
+  }
+
+  handleClick(e) {
+    this.setState({
+      addClicked: !this.state.addClicked
+    });
   }
 
   handleChangeDropdown(e) {
@@ -147,7 +158,8 @@ class ShoppingListExpandDialog extends React.Component {
       selectedFromList,
       currentItemsInEachShoppingList
     } = this.state;
-    const { classes, listName } = this.props;
+    const { classes, listName, sendUrl } = this.props;
+
     console.log("ShoppingListExppandProps");
     console.log(this.props);
 
@@ -178,9 +190,9 @@ class ShoppingListExpandDialog extends React.Component {
         >
           <div className="Expand-Dialog-Container">
             <h2 className="Expand-Dialog-Title">{listName}</h2>
-            {/* <p className="Expand-Dialog-Subtitle">
-              {items.length + " " + "Items"}
-            </p> */}
+            <p className="Expand-Dialog-Subtitle">
+              {currentItemsInEachShoppingList.length + " " + "Items"}
+            </p>
             <div className="Expand-Dialog-Content-Container">
               {currentItemsInEachShoppingList &&
                 currentItemsInEachShoppingList.map((item, index) => {
@@ -189,9 +201,12 @@ class ShoppingListExpandDialog extends React.Component {
                       key={index}
                       name={item.name}
                       link={item.url}
-                      // img={item.img}
-                      // oldPrice={item.oldPrice}
-                      // newPrice={item.newPrice}
+                      img={item.img}
+                      oldPrice={
+                        item.prices.length > 2 &&
+                        item.prices[item.prices.length - 2].value
+                      }
+                      newPrice={item.prices[item.prices.length - 1].value}
                     />
                   );
                 })}
@@ -203,10 +218,18 @@ class ShoppingListExpandDialog extends React.Component {
                 variant="extended"
                 size="large"
                 className={classes.buttonStyles}
+                onClick={this.handleClick.bind(this)}
               >
                 Add Item
               </Fab>
             </DialogActions>
+            <NewItem
+              open={this.state.addClicked}
+              handleClick={this.handleClick.bind(this)}
+              sendURL={sendUrl}
+              store={this.props.store}
+              link={this.props.currentItemUrl.link}
+            />
           </div>
         </Dialog>
       </div>
@@ -219,13 +242,16 @@ function mapStateToProps(state) {
     currentUser: state.currentUser,
     shoppingList: state.shoppingList, // left size is the state of this comp while right side is from redux
     currentShoppingList: state.currentShoppingList,
-    currentItemsInEachShoppingList: state.currentItemsInEachShoppingList
+    currentItemsInEachShoppingList: state.currentItemsInEachShoppingList,
+    currentItemUrl: state.currentItemUrl
   };
 }
 
-// export default withStyles(styles)(ShoppingListExpandDialog);
+const mapDispatch = { sendUrl, loadEachItemInShoppingList };
 
-export default connect(
-  mapStateToProps,
-  { loadEachItemInShoppingList }
-)(ShoppingListExpandDialog);
+export default withStyles(styles)(
+  connect(
+    mapStateToProps,
+    mapDispatch
+  )(ShoppingListExpandDialog)
+);

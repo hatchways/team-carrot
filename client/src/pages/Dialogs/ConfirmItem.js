@@ -9,12 +9,10 @@ import DialogActions from "@material-ui/core/DialogActions";
 import Fab from "@material-ui/core/Fab";
 import { apiCallWithHeader } from "../../services/apiHeaders";
 import { connect } from "react-redux";
-import { saveItemUrl } from "../../stores/actions/saveItemUrl";
-import CircularProgress from "@material-ui/core/CircularProgress";
 
 const styles = theme => ({
   dialogPaper: {
-    minHeight: "50vh",
+    minHeight: "60vh",
     maxHeight: "60vh",
     minWidth: "45vw",
     maxWidth: "45vw",
@@ -50,9 +48,6 @@ const styles = theme => ({
     background: "#DF1B1B",
     marginTop: "35px",
     color: "white"
-  },
-  root: {
-    height: "45px"
   }
 });
 
@@ -60,18 +55,8 @@ class NewItem extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      link: "",
-      list: [
-        { name: "Luxury" },
-        { name: "Clothes" },
-        { name: "Furniture" },
-        { name: "Games" },
-        { name: "Gadgets" },
-        { name: "Watches.png" }
-      ],
-      selectedFromList: "",
-      holdItemDetails: {},
-      loading: false
+      url: "",
+      selectedFromList: ""
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -84,18 +69,21 @@ class NewItem extends React.Component {
 
   handleChangeDropdown(e) {
     this.setState({ selectedFromList: e.target.value }, () => {
-      console.log("Current State");
+      console.log("Current State of Confirm Item");
       console.log(this.state);
+      console.log("Current Props of Confirm Item");
+      console.log(this.props);
     });
   }
 
   handleSubmit = e => {
     e.preventDefault();
-    const type = "scrapeItem";
-    this.setState({ loading: true });
+    const type = "storeItem";
     const userData = {
-      url: this.state.link
-      // name: this.state.selectedFromList
+      url: this.props.currentLink.link,
+      name: this.props.itemInfo.details.data.name,
+      list_name: this.state.selectedFromList,
+      prices: this.props.itemInfo.details.data.prices
     };
 
     const headers = {
@@ -107,27 +95,25 @@ class NewItem extends React.Component {
     console.log(headers.headers["x-auth-token"].length);
     console.log(localStorage.getItem("jwtToken").length);
 
-    this.props.sendURL(userData, headers).then(() => {
-      this.setState({ loading: false });
+    // this.props.sendURL(userData, headers);
+
+    apiCallWithHeader(
+      "post",
+      `http://localhost:4000/item/${type}`,
+      userData,
+      headers
+    ).then(res => {
+      console.log(res);
     });
-
-    this.props.store.dispatch(saveItemUrl(this.state.link));
-
-    // apiCallWithHeader(
-    //   "post",
-    //   `http://localhost:4000/item/${type}`,
-    //   userData,
-    //   headers
-    // ).then(res => {
-    //   console.log(res);
-    // });
   };
 
   render() {
-    const { link, list, selectedFromList, loading } = this.state;
-    const { classes } = this.props;
+    const { link, list, selectedFromList } = this.state;
+    const { classes, itemInfo, currentShoppingList } = this.props;
+    console.log("These are the Confirm Item props");
+    console.log(this.props);
 
-    const dropdown = list.map((item, index) => {
+    const dropdown = currentShoppingList.map((item, index) => {
       return (
         <MenuItem
           key={index}
@@ -152,7 +138,7 @@ class NewItem extends React.Component {
           aria-labelledby="form-dialog-title"
         >
           <DialogTitle id="form-dialog-title">
-            <h3 style={{ textAlign: "center" }}>Add New Item</h3>
+            <h3 style={{ textAlign: "center" }}>Confirm New Item</h3>
           </DialogTitle>
 
           <form
@@ -161,11 +147,11 @@ class NewItem extends React.Component {
             onSubmit={this.handleSubmit.bind(this)}
             className={classes.formWidth}
           >
-            <p className={classes.textFieldHeader}>Paste link to your item:</p>
+            <p className={classes.textFieldHeader}>Name:</p>
             <TextField
-              id="outlined-link"
-              label="Link"
-              value={this.props.link || link}
+              id="outlined-name"
+              label="Name"
+              value={itemInfo.details.data.name}
               type="text"
               name="link"
               margin="normal"
@@ -174,26 +160,47 @@ class NewItem extends React.Component {
               onChange={this.handleChange}
             />
             <br />
+            <p className={classes.textFieldHeader}>Price:</p>
+            <TextField
+              id="outlined-link"
+              label="Link"
+              value={itemInfo.details.data.prices[0].value}
+              type="text"
+              name="link"
+              margin="normal"
+              variant="outlined"
+              className={classes.FormControl}
+              onChange={this.handleChange}
+            />
+            <br />
+            <p className={classes.textFieldHeader}>Image:</p>
+            <img src={itemInfo.details.data.url} alt="pic"></img>
+            <br />
+            {/* -=-==---------------------------------------------------------------------------------------------------------------------------------- */}
+            <p className={classes.textFieldHeader}>Select list:</p>
+            <TextField
+              select
+              label={selectedFromList === "" ? "Select" : ""}
+              className={classes.textFieldDropdown}
+              value={selectedFromList}
+              onChange={this.handleChangeDropdown}
+              InputLabelProps={{ shrink: false }}
+              margin="normal"
+              variant="outlined"
+            >
+              {dropdown}
+            </TextField>
 
             {/* -=-==---------------------------------------------------------------------------------------------------------------------------------- */}
-            <div style={{ height: "40px", width: "40px" }}>
-              {loading ? (
-                <CircularProgress
-                  className={classes.progress}
-                  color="secondary"
-                />
-              ) : null}
-            </div>
-            <DialogActions className={classes.root}>
+            <DialogActions>
               <Fab
                 type="submit"
                 label="Submit"
                 variant="extended"
                 size="large"
                 className={classes.buttonStyles}
-                disabled={loading}
               >
-                Add Item
+                Confirm Item
               </Fab>
             </DialogActions>
           </form>
@@ -203,4 +210,37 @@ class NewItem extends React.Component {
   }
 }
 
+// function mapStateToProps(state) {
+//   return {
+//     currentItemUrl: state.url
+//   };
+// }
+
+// export default connect(
+//   mapStateToProps,
+
+// )(DashBoardApp);
+
+// export default connect(
+//   mapStateToProps,
+//   { sendNewItemUrl }
+// )(NewItem);
+
+// export default withStyles(styles)(connect(mapStateToProps)(NewItem));
+
 export default withStyles(styles)(NewItem);
+
+{
+  /* <TextField
+              select
+              label={selectedFromList === "" ? "Select" : ""}
+              value={selectedFromList}
+              onChange={this.handleChangeDropdown}
+              InputLabelProps={{ shrink: false }}
+              className={classes.selectTextField}
+              variant="outlined"
+              margin="normal"
+            >
+              {dropdown}
+            </TextField> */
+}

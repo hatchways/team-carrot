@@ -3,9 +3,12 @@
   align-items: center;
   margin: 10px;
   background-color: #fff;
+  /* background-color: blue; */
   padding: 5px;
   box-shadow: 5px 5px 10px #eee;
   width: 95%;
+  height: 100px;
+  border-radius: 10px;
 }
 
 .EachItem-img {

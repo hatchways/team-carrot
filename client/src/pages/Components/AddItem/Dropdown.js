@@ -35,7 +35,16 @@ class Dropdown extends React.Component {
 
         {this.state.displayMenu ? (
           <ul>
-            <li>
+            {this.props.currentShoppingList.map((item, index) => {
+              return (
+                <li key={index}>
+                  <a className="active" href="#Create Page">
+                    {item.name}
+                  </a>
+                </li>
+              );
+            })}
+            {/* <li>
               <a className="active" href="#Create Page">
                 Gadgets
               </a>
@@ -48,7 +57,7 @@ class Dropdown extends React.Component {
             </li>
             <li>
               <a href="#">Luxury</a>
-            </li>
+            </li> */}
           </ul>
         ) : null}
       </div>

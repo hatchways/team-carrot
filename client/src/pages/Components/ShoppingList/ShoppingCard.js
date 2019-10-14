@@ -78,6 +78,7 @@ class ShoppingCard extends Component {
           handleClick={this.handleClick}
           {...this.props}
           listName={this.props.name}
+          store={this.props.store}
         />
       </div>
     );

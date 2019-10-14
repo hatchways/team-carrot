@@ -11,7 +11,7 @@ import { authUser } from "../../../stores/actions/auth";
 class Header extends Component {
   render() {
     const { authUser, errors } = this.props;
-    console.log("Props Header");
+    console.log("These are Props Header");
     console.log(this.props);
     return (
       <AppBar position="static">

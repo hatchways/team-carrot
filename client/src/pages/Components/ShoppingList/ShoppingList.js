@@ -28,7 +28,14 @@ class ShoppingList extends Component {
         </div>
         <div className="shoppingList-content">
           {this.props.shoppingList.map((item, index) => {
-            return <ShoppingCard key={index} name={item.name} img={item.url} />;
+            return (
+              <ShoppingCard
+                key={index}
+                name={item.name}
+                img={item.url}
+                store={this.props.store}
+              />
+            );
           })}
           <ShoppingListDialog
             open={this.state.addClicked}
