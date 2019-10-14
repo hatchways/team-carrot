@@ -76,6 +76,7 @@ class AddItem extends Component {
               itemInfo={this.props.itemInfoScrapped}
               currentShoppingList={this.props.shoppingList}
               currentLink={this.props.currentItemUrl}
+              preSetListName={this.props.currentListName.preSelectedList}
               // resetItemDetails={resetItemDetails}
             />
           ) : null}
@@ -94,7 +95,8 @@ class AddItem extends Component {
 function mapStateToProps(state) {
   return {
     itemInfoScrapped: state.itemInfoScrapped,
-    currentItemUrl: state.currentItemUrl
+    currentItemUrl: state.currentItemUrl,
+    currentListName: state.currentListName
   };
 }
 

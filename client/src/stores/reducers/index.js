@@ -6,6 +6,7 @@ import currentShoppingList from "../reducers/currentList";
 import currentItemsInShoppingList from "../reducers/currentItemInList";
 import itemInfoScrapped from "../reducers/itemInfoScrapped";
 import currentItemUrl from "../reducers/currentItemUrl";
+import saveListName from "../reducers/preSelectedList";
 
 const rootReducer = combineReducers({
   currentUser: currentUser,
@@ -14,7 +15,8 @@ const rootReducer = combineReducers({
   currentShoppingList: currentShoppingList,
   currentItemsInEachShoppingList: currentItemsInShoppingList,
   itemInfoScrapped: itemInfoScrapped,
-  currentItemUrl: currentItemUrl
+  currentItemUrl: currentItemUrl,
+  currentListName: saveListName
 });
 
 export default rootReducer;

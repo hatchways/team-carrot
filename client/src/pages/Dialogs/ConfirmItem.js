@@ -56,11 +56,27 @@ class NewItem extends React.Component {
     super(props);
     this.state = {
       url: "",
-      selectedFromList: ""
+      selectedFromList: "",
+      disableSelectList: false
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChangeDropdown = this.handleChangeDropdown.bind(this);
+  }
+
+  componentDidMount() {
+    if (this.props.preSetListName) {
+      this.setState(
+        {
+          selectedFromList: this.props.preSetListName,
+          disableSelectList: true
+        },
+        () => {
+          console.log("This is confirmItem state");
+          console.log(this.state);
+        }
+      );
+    }
   }
 
   handleChange(e) {
@@ -108,7 +124,7 @@ class NewItem extends React.Component {
   };
 
   render() {
-    const { link, list, selectedFromList } = this.state;
+    const { link, list, selectedFromList, disableSelectList } = this.state;
     const { classes, itemInfo, currentShoppingList } = this.props;
     console.log("These are the Confirm Item props");
     console.log(this.props);
@@ -187,6 +203,7 @@ class NewItem extends React.Component {
               InputLabelProps={{ shrink: false }}
               margin="normal"
               variant="outlined"
+              disabled={disableSelectList}
             >
               {dropdown}
             </TextField>

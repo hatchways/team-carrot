@@ -53,6 +53,11 @@ const styles = theme => ({
   },
   root: {
     height: "45px"
+  },
+  circularProgress: {
+    height: "40px",
+    width: "40px",
+    color: "#DF1B1B"
   }
 });
 
@@ -176,11 +181,11 @@ class NewItem extends React.Component {
             <br />
 
             {/* -=-==---------------------------------------------------------------------------------------------------------------------------------- */}
-            <div style={{ height: "40px", width: "40px" }}>
+            <div className={classes.circularProgress}>
               {loading ? (
                 <CircularProgress
                   className={classes.progress}
-                  color="secondary"
+                  color="inherit"
                 />
               ) : null}
             </div>

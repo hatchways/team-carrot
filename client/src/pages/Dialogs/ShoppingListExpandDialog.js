@@ -13,6 +13,7 @@ import { connect } from "react-redux";
 import { loadEachItemInShoppingList } from "../../stores/actions/getItemInEachShoppingList";
 import NewItem from "./NewItem";
 import { sendUrl } from "../../stores/actions/sendURLGetItemInfo";
+import { saveListName } from "../../stores/actions/setPreSelectedList";
 
 const styles = theme => ({
   dialogPaper: {
@@ -63,13 +64,7 @@ class ShoppingListExpandDialog extends React.Component {
     this.state = {
       addClicked: false,
       link: "",
-      list: [
-        { name: "Luxury" },
-        { name: "Clothes" },
-        { name: "Furniture" },
-        { name: "Games" },
-        { name: "Gadgets" }
-      ],
+      list_name: "",
       selectedFromList: "",
       currentItemsInEachShoppingList: "",
       currentItemUrl: ""
@@ -111,9 +106,20 @@ class ShoppingListExpandDialog extends React.Component {
   }
 
   handleClick(e) {
-    this.setState({
-      addClicked: !this.state.addClicked
-    });
+    this.setState(
+      {
+        addClicked: !this.state.addClicked,
+        list_name: this.props.listName
+      },
+      () => {
+        console.log(
+          "This is state of ShoppinglistExpand Dialog with list_name"
+        );
+        console.log(this.state);
+        this.props.store.dispatch(saveListName(this.state.list_name));
+      }
+    );
+    // this.props.store.dispatch(saveListName(this.state.list_name));
   }
 
   handleChangeDropdown(e) {
