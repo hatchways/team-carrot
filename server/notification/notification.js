@@ -12,6 +12,7 @@ const createNotification = async(itemId, previousPrice, newPrice) => {
         const newNotification = new Notification({
             user: item.user,
             item: item.id,
+            itemName: item.name,
             previousPrice: previousPrice,
             newPrice: newPrice
         })
