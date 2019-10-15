@@ -12,7 +12,7 @@ const Main = props => {
   return (
     <Switch>
       <Route exact path="/" render={props => <Welcome {...props} />} />
-      {/* <Route exact path="/" render={props => <DashBoardApp {...props} />} /> */}
+      {/* <Route exact path="/dashboard" render={props => <Welcome {...props} />} /> */}
       <Route
         exact
         path="/dashboard"

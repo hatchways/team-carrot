@@ -1,30 +1,25 @@
 import React from "react";
+import HeaderPopOver from "./HeaderPopOver";
 
 const containerStyle = {
   display: "flex",
   alignItems: "center"
 };
 
-const buttonStyle = {
-  margin: "0 15px",
-  border: "none",
-  backgroundColor: "#FFFFFF",
-  cursor: "pointer",
-  fontWeight: "550"
-};
-
 const HeaderButtons = props => {
+  console.log("HeaderButton Props");
+  console.log(props);
   return (
     <div style={containerStyle}>
-      <button className="headButton" style={buttonStyle}>
-        Shopping List
-      </button>
-      <button className="headButton" style={buttonStyle}>
-        Friends
-      </button>
-      <button className="headButton" style={buttonStyle}>
-        Notifications
-      </button>
+      <HeaderPopOver
+        name={"Shopping List"}
+        notifications={props.notifications}
+      />
+      <HeaderPopOver name={"Friends"} notifications={props.notifications} />
+      <HeaderPopOver
+        name={"Notifications"}
+        notifications={props.notifications}
+      />
     </div>
   );
 };

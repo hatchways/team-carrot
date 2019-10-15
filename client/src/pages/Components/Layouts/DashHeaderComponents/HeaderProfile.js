@@ -4,7 +4,8 @@ import ProfilePicture from "../../../../assets/profiledemopic.png";
 const styleContainer = {
   display: "flex",
   alignItems: "center",
-  color: "black"
+  color: "black",
+  paddingLeft: "50px"
 };
 
 const stylePic = {

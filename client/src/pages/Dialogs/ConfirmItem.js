@@ -9,6 +9,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import Fab from "@material-ui/core/Fab";
 import { apiCallWithHeader } from "../../services/apiHeaders";
 import { connect } from "react-redux";
+import ConfirmItemStorage from "./ConfirmItemStorage";
 
 const styles = theme => ({
   dialogPaper: {
@@ -57,7 +58,8 @@ class NewItem extends React.Component {
     this.state = {
       url: "",
       selectedFromList: "",
-      disableSelectList: false
+      disableSelectList: false,
+      addClicked: false
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -99,7 +101,8 @@ class NewItem extends React.Component {
       url: this.props.currentLink.link,
       name: this.props.itemInfo.details.data.name,
       list_name: this.state.selectedFromList,
-      prices: this.props.itemInfo.details.data.prices
+      prices: this.props.itemInfo.details.data.prices,
+      pictureUrl: this.props.itemInfo.details.data.pictureUrl
     };
 
     const headers = {
@@ -179,7 +182,7 @@ class NewItem extends React.Component {
             <p className={classes.textFieldHeader}>Price:</p>
             <TextField
               id="outlined-link"
-              label="Link"
+              label="Price ($ CDN)"
               value={itemInfo.details.data.prices[0].value}
               type="text"
               name="link"
@@ -190,7 +193,7 @@ class NewItem extends React.Component {
             />
             <br />
             <p className={classes.textFieldHeader}>Image:</p>
-            <img src={itemInfo.details.data.url} alt="pic"></img>
+            <img src={itemInfo.details.data.pictureUrl} alt="pic"></img>
             <br />
             {/* -=-==---------------------------------------------------------------------------------------------------------------------------------- */}
             <p className={classes.textFieldHeader}>Select list:</p>
