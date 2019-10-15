@@ -1,20 +1,20 @@
-const cheerio = require('cheerio');
 const puppeteer = require('puppeteer');
-
+const browserPromise = require('./browser');
 const getProductContent = (siteUrl) => {
     let promise = new Promise(async(resolve, reject) => {
-        const browser = await puppeteer.launch({
-            headless: true
-        });
+        const browser = await browserPromise.getInstance();
+        console.log("SCRAPING URL", siteUrl);
         const page = await browser.newPage();
         await page.goto(siteUrl);
-        try {
-            const productTitle = await page.evaluate(() => 'document.querySelector("#productTitle").innerText');
-
-        } catch (err) {
-            console.log(err);
-        }
-        const productTitle = await page.evaluate(() => document.querySelector("#productTitle").innerText);
+        await page.waitFor(3000);
+        const productTitle = await page.evaluate(() => {
+            const ele = document.querySelector("#productTitle");
+            if (!ele) {
+                console.log(window.location.href, 'no name found');
+                return '';
+            }
+            return ele.innerText;
+        });
         let productPrice;
         let pictureURL = '';
         try {
@@ -37,13 +37,18 @@ const getProductContent = (siteUrl) => {
         }
         try {
             pictureURL = await page.evaluate(() => {
-                return document.querySelector('#imgTagWrapperId img').src;
+                const ele = document.querySelector("#imgTagWrapperId img");
+                if (!ele) {
+                    console.log(window.location.href, 'no image found');
+                    return '';
+                }
+                return ele.src;
             });;
         } catch (err) {
             console.log(err);
         }
-
-        await browser.close();
+        await page.close();
+        // await browser.close();
         const product = {
             name: productTitle,
             prices: [{

@@ -11,6 +11,9 @@ const NotificationSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'users'
     },
+    itemName: {
+        type: String
+    },
     previousPrice: {
         type: Number
     },
