@@ -14,6 +14,12 @@ const NotificationSchema = new Schema({
     itemName: {
         type: String
     },
+    itemUrl: {
+        type: String
+    },
+    imageUrl: {
+        type: String
+    },
     previousPrice: {
         type: Number
     },

@@ -130,9 +130,16 @@ router.post(
                 user: {
                     id: user.id,
                     name: user.name,
-                    notifications: notifications
                 }
             };
+
+            const body = {
+                user: {
+                    id: user.id,
+                    name: user.name,
+                },
+                notifications
+            }
 
             jwt.sign(
                 payload,
@@ -140,7 +147,7 @@ router.post(
                 (err, token) => {
                     if (err) throw err;
                     console.log(token);
-                    res.status(200).json({ token, payload });
+                    res.status(200).json({ token, body });
                 }
             );
         } catch (err) {

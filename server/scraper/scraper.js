@@ -6,7 +6,7 @@ const getProductContent = (siteUrl) => {
         console.log("SCRAPING URL", siteUrl);
         const page = await browser.newPage();
         await page.goto(siteUrl);
-        await page.waitFor(3000);
+        await page.waitFor("#productTitle");
         const productTitle = await page.evaluate(() => {
             const ele = document.querySelector("#productTitle");
             if (!ele) {
