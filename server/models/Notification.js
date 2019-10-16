@@ -25,8 +25,17 @@ const NotificationSchema = new Schema({
     },
     newPrice: {
         type: Number
+    },
+    dismissed: {
+        type: Boolean,
+        default: false
+    },
+    timestamp: {
+        type: Date,
+        default: Date.now
     }
 })
+
 
 const Notification = mongoose.model('notification', NotificationSchema);
 module.exports = Notification;
