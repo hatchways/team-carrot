@@ -9,7 +9,7 @@ module.exports = (function() {
                 return browserPromise;
             }
             browserPromise = puppeteer.launch({
-                headless: true
+                headless: false
             });
             return browserPromise;
         }
