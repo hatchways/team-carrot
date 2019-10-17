@@ -5,7 +5,8 @@ const getProductContent = (siteUrl) => {
         const browser = await browserPromise.getInstance();
         console.log("SCRAPING URL", siteUrl);
         const page = await browser.newPage();
-        await page.goto(siteUrl);
+        await page.goto(siteUrl, { timeout: 600000 });
+        // await page.waitFor(Math.floor(Math.random() * 7) * 1000);
         await page.waitFor("#productTitle");
         const productTitle = await page.evaluate(() => {
             const ele = document.querySelector("#productTitle");

@@ -4,6 +4,7 @@ import Popover from "@material-ui/core/Popover";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import "./HeaderPopOver.css";
+import FontAwesome from "./Icon";
 
 const useStyles = makeStyles(theme => ({
   typography: {
@@ -62,22 +63,28 @@ export default function HeaderPopOver(props) {
                 <div>
                   <div className="EachItem-Container">
                     <div className="EachItem-img-container">
-                      {/* <img
-                        className="EachItem-img"
-                        src={this.props.img}
-                        alt="img"
-                      ></img> */}
+                      {item.imageUrl && (
+                        <img
+                          className="EachItem-img"
+                          src={item.imageUrl}
+                          alt="img"
+                        ></img>
+                      )}
                     </div>
                     <div>
                       <span className="EachItem-name">
-                        <p id="name">{item.item}</p>
-                        {/* <p id="link">{this.props.link}</p> */}
+                        {item.itemName && <p id="name">{item.itemName}</p>}
+                        {item.itemUrl && <p id="link">{item.itemUrl}</p>}
                         <span className="EachItem-price">
-                          <p id="oldPrice">{item.previousPrice}</p>
-                          <p id="newPrice">{item.newPrice}</p>
+                          <p id="oldPrice">${item.previousPrice}</p>
+                          <p id="newPrice">${item.newPrice}</p>
                         </span>
                       </span>
                     </div>
+                    <span>
+                      {/* <FontAwesome></FontAwesome> */}
+                      <RandomButton id={item.newPrice}></RandomButton>
+                    </span>
                   </div>
                 </div>
               </Typography>
@@ -87,3 +94,11 @@ export default function HeaderPopOver(props) {
     </div>
   );
 }
+
+const RandomButton = props => {
+  return (
+    <div>
+      <p onClick={props.handleClick}>X</p>
+    </div>
+  );
+};

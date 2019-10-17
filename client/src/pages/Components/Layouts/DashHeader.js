@@ -53,14 +53,15 @@ class DashHeader extends Component {
           </div>
           <div style={styleToolbarRight}>
             <HeaderButtons
-              notifications={this.props.currentNotifications.notifications}
+              notifications={this.props.currentNotifications.notifications.reverse()}
             />
             <HeaderProfile
-              user={
-                Object.keys(this.props.currentUser.user).length === 0
-                  ? { name: "Dev Default" }
-                  : this.props.currentUser.user.payload.user
-              }
+              // user={
+              //   Object.keys(this.props.currentUser.user).length === 0
+              //     ? { name: "Dev Default" }
+              //     : this.props.currentUser.user.payload.user
+              // }
+              user={this.props.currentUser.user.body.user}
             />
           </div>
         </Toolbar>

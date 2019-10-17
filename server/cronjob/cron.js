@@ -4,7 +4,7 @@ import scraper from "../scraper/scraper";
 import notification from "../notification/notification";
 
 const startCronJob = async () => {
-  const cronJob = cron.schedule("*/60 * * * * *", async () => {
+  const cronJob = cron.schedule("* * * * *", async () => {
     try {
       const items = await Item.find();
       console.log(items);
