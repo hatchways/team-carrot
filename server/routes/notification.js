@@ -18,6 +18,48 @@ router.get('/', auth, async(req, res) => {
 
 });
 
+router.get('/new', auth, async(req, res) => {
+    try {
+        const notifications = await Notification.find({
+            user: req.user.id,
+            dismissed: false
+        });
+        res.json(notifications);
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send("server error");
+    }
+
+});
+
+router.get('/timestamp/:t', auth, async(req, res) => {
+    try {
+
+
+        if (!req.params.t) {
+            const notifications = await Notification.find({
+                user: req.user.id,
+                dismissed: false
+            });
+            return res.json(notifications);
+        } else {
+            const notifications = await Notification.find({
+                user: req.user.id,
+                timestamp: { $gt: req.params.t }
+            });
+            if (notifications.length) {
+                res.json(notifications);
+            } else {
+                res.status(304).json({ "msg": "Not modified" })
+            }
+        }
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send("server error");
+    }
+
+});
+
 
 router.post('/dismiss', auth, [
         check('id', 'id is required')
