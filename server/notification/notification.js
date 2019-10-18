@@ -16,8 +16,9 @@ const createNotification = async(itemId, previousPrice, newPrice) => {
             itemUrl: item.url,
             imageUrl: item.pictureUrl,
             previousPrice: previousPrice,
-            newPrice: newPrice
-        })
+            newPrice: newPrice,
+            timestamp: Date.now()
+        });
 
         const notification = await newNotification.save();
         console.log("notification saved in database");
