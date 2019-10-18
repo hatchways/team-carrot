@@ -14,53 +14,39 @@ const s3 = new aws.S3({
 
 
 router.post('/', auth, (req, res, next) => {
-    var busboy = new Busboy({ headers: req.headers });
 
-    busboy.on('finish', function() {
-        console.log('Upload finished');
+    const file = req.files.cover;
+    console.log(file);
+    const params = {
+        Bucket: process.env.BUCKET_NAME, // pass your bucket name
+        Key: req.body.name,
+        ContentType: file.mimetype,
+        ACL: 'public-read',
+        Body: file.data
+    };
+    s3.upload(params, function(s3Err, data) {
+        if (s3Err) throw s3Err
+        console.log(`File uploaded successfully at ${data.Location}`);
 
-        const file = req.files.cover;
-        console.log(file);
-        s3.createBucket(function() {
-            const params = {
-                Bucket: process.env.BUCKET_NAME, // pass your bucket name
-                Key: req.body.name,
-                Body: JSON.stringify(file, null, 2)
-            };
-            s3.upload(params, function(s3Err, data) {
-                if (s3Err) throw s3Err
-                console.log(`File uploaded successfully at ${data.Location}`)
-
-                const url = s3.getSignedUrl('getObject', {
-                    Bucket: process.env.BUCKET_NAME,
-                    Key: req.body.name
-                })
-
-
-                try {
-                    const newList = new List({
-                        user: req.user.id,
-                        url: url,
-                        name: req.body.name
-                    });
-
-                    const list = newList.save().then((list) => {
-                        res.status(200).send(list);
-                        console.log("image saved in database")
-                    })
-
-
-                } catch (err) {
-                    console.log(err.message);
-                    res.status(500).send("server error");
-                }
-
+        try {
+            const newList = new List({
+                user: req.user.id,
+                url: data.Location,
+                name: req.body.name
             });
 
-        })
+            const list = newList.save().then((list) => {
+                res.status(200).send(list);
+                console.log("image saved in database")
+            })
+
+
+        } catch (err) {
+            console.log(err.message);
+            res.status(500).send("server error");
+        }
 
     });
-    req.pipe(busboy);
 });
 
 

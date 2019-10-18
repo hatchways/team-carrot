@@ -5,38 +5,10 @@ import { check } from 'express-validator';
 
 const router = express.Router();
 
-router.get('/', auth, async(req, res) => {
+router.get('/all', auth, async(req, res) => {
     try {
-        const notifications = await Notification.find({
-            user: req.user.id,
-        });
-        res.json(notifications);
-    } catch (err) {
-        console.log(err.message);
-        res.status(500).send("server error");
-    }
-
-});
-
-router.get('/new', auth, async(req, res) => {
-    try {
-        const notifications = await Notification.find({
-            user: req.user.id,
-            dismissed: false
-        });
-        res.json(notifications);
-    } catch (err) {
-        console.log(err.message);
-        res.status(500).send("server error");
-    }
-
-});
-
-router.get('/timestamp/:t', auth, async(req, res) => {
-    try {
-
-
-        if (!req.params.t) {
+        if (!req.query.t) {
+            console.log(req.query.t)
             const notifications = await Notification.find({
                 user: req.user.id,
                 dismissed: false
@@ -45,7 +17,7 @@ router.get('/timestamp/:t', auth, async(req, res) => {
         } else {
             const notifications = await Notification.find({
                 user: req.user.id,
-                timestamp: { $gt: req.params.t }
+                timestamp: { $gt: req.query.t }
             });
             if (notifications.length) {
                 res.json(notifications);
@@ -61,7 +33,7 @@ router.get('/timestamp/:t', auth, async(req, res) => {
 });
 
 
-router.post('/dismiss', auth, [
+router.put('/dismiss', auth, [
         check('id', 'id is required')
         .not()
         .isEmpty()

@@ -31,8 +31,7 @@ const NotificationSchema = new Schema({
         default: false
     },
     timestamp: {
-        type: Date,
-        default: Date.now
+        type: Number
     }
 })
 
