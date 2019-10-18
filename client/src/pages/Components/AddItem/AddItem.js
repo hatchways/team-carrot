@@ -61,7 +61,7 @@ class AddItem extends Component {
             onChange={this.handleChange}
             className="additem-link-input"
           />
-          <Dropdown currentShoppingList={this.props.shoppingList} />
+          {/* <Dropdown currentShoppingList={this.props.shoppingList} /> */}
           <NewItem
             open={this.state.addClicked}
             handleClick={this.handleClick.bind(this)}

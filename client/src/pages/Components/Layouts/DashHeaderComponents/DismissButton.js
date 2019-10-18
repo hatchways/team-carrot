@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import ClearButton from "./Icon";
 
 class DismissButton extends Component {
   handleDismiss() {
@@ -8,14 +9,14 @@ class DismissButton extends Component {
   }
   render() {
     const DismissStyle = {
-      marginBottom: "100px"
+      marginBottom: "80px"
     };
 
     return (
       <div>
         <div>
           <p style={DismissStyle} onClick={this.handleDismiss.bind(this)}>
-            X
+            <ClearButton />
           </p>
         </div>
       </div>

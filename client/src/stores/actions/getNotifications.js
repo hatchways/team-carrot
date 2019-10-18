@@ -14,7 +14,7 @@ export function loadNotifications(headers) {
     return new Promise((resolve, reject) => {
       return apiCallWithHeader(
         "get",
-        `http://localhost:4000/notification`,
+        `http://localhost:4000/notification/all`,
         headers
       )
         .then(res => {

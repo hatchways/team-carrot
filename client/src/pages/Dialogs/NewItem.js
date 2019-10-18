@@ -99,7 +99,7 @@ class NewItem extends React.Component {
     const type = "scrapeItem";
     this.setState({ loading: true });
     const userData = {
-      url: this.state.link
+      url: this.state.link || this.props.link
       // name: this.state.selectedFromList
     };
 
@@ -112,11 +112,14 @@ class NewItem extends React.Component {
     console.log(headers.headers["x-auth-token"].length);
     console.log(localStorage.getItem("jwtToken").length);
 
-    this.props.sendURL(userData, headers).then(() => {
-      this.setState({ loading: false });
-    });
-
-    this.props.store.dispatch(saveItemUrl(this.state.link));
+    this.props
+      .sendURL(userData, headers)
+      .then(() => {
+        this.setState({ loading: false });
+      })
+      .then(() => {
+        this.props.store.dispatch(saveItemUrl(this.state.link));
+      });
 
     // apiCallWithHeader(
     //   "post",
@@ -170,7 +173,7 @@ class NewItem extends React.Component {
             <TextField
               id="outlined-link"
               label="Link"
-              value={link}
+              value={this.props.link || link}
               type="text"
               name="link"
               margin="normal"

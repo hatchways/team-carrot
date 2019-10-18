@@ -85,8 +85,10 @@ export default function HeaderPopOver(props) {
                         </span>
                       </span>
                     </div>
+
                     <span>
                       {/*  */}
+
                       <DismissButton id={item._id}></DismissButton>
                     </span>
                   </div>

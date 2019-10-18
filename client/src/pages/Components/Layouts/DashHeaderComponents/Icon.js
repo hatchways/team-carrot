@@ -21,8 +21,8 @@ export default function Icons() {
 
   return (
     <div className={classes.root}>
-      <Icon color="secondary" fontSize="large">
-        add_circle
+      <Icon className={classes.iconHover} color="action" fontSize="small">
+        clear
       </Icon>
     </div>
   );

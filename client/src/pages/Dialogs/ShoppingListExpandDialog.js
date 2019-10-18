@@ -14,6 +14,7 @@ import { loadEachItemInShoppingList } from "../../stores/actions/getItemInEachSh
 import NewItem from "./NewItem";
 import { sendUrl } from "../../stores/actions/sendURLGetItemInfo";
 import { saveListName } from "../../stores/actions/setPreSelectedList";
+import { clearListName } from "../../stores/actions/setPreSelectedList";
 
 const styles = theme => ({
   dialogPaper: {
@@ -74,6 +75,7 @@ class ShoppingListExpandDialog extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChangeDropdown = this.handleChangeDropdown.bind(this);
     this.getItems = this.getItems.bind(this);
+    this.clearListName = this.clearListName.bind(this);
   }
 
   getItems() {
@@ -120,6 +122,11 @@ class ShoppingListExpandDialog extends React.Component {
       }
     );
     // this.props.store.dispatch(saveListName(this.state.list_name));
+  }
+
+  clearListName(e) {
+    console.log("Clear listName");
+    this.props.store.dispatch(saveListName());
   }
 
   handleChangeDropdown(e) {
@@ -193,6 +200,7 @@ class ShoppingListExpandDialog extends React.Component {
           onClose={this.props.handleClick}
           aria-labelledby="form-dialog-title"
           onEnter={this.getItems}
+          onExit={this.clearListName}
         >
           <div className="Expand-Dialog-Container">
             <h2 className="Expand-Dialog-Title">{listName}</h2>
@@ -253,7 +261,7 @@ function mapStateToProps(state) {
   };
 }
 
-const mapDispatch = { sendUrl, loadEachItemInShoppingList };
+const mapDispatch = { sendUrl, loadEachItemInShoppingList, clearListName };
 
 export default withStyles(styles)(
   connect(
