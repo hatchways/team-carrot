@@ -4,7 +4,7 @@ import Popover from "@material-ui/core/Popover";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import "./HeaderPopOver.css";
-import FontAwesome from "./Icon";
+import DismissButton from "./DismissButton";
 
 const useStyles = makeStyles(theme => ({
   typography: {
@@ -26,6 +26,10 @@ export default function HeaderPopOver(props) {
 
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
+
+  const handleDismiss = event => {
+    console.log("Dismiss is clicked");
+  };
 
   console.log("HeaderPopOver props");
   console.log(props);
@@ -82,8 +86,8 @@ export default function HeaderPopOver(props) {
                       </span>
                     </div>
                     <span>
-                      {/* <FontAwesome></FontAwesome> */}
-                      <RandomButton id={item.newPrice}></RandomButton>
+                      {/*  */}
+                      <DismissButton id={item._id}></DismissButton>
                     </span>
                   </div>
                 </div>
@@ -94,11 +98,3 @@ export default function HeaderPopOver(props) {
     </div>
   );
 }
-
-const RandomButton = props => {
-  return (
-    <div>
-      <p onClick={props.handleClick}>X</p>
-    </div>
-  );
-};

@@ -1,6 +1,7 @@
 .EachItem-Container {
   display: flex;
   align-items: center;
+  justify-content: space-evenly;
   /* margin: 10px; */
   background-color: #fff;
   /* background-color: blue; */
