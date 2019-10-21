@@ -12,13 +12,13 @@ router.get('/all', auth, async(req, res) => {
             const notifications = await Notification.find({
                 user: req.user.id,
                 dismissed: false
-            });
+            }).sort('-timestamp');
             return res.json(notifications);
         } else {
             const notifications = await Notification.find({
                 user: req.user.id,
                 timestamp: { $gt: req.query.t }
-            });
+            }).sort('-timestamp');
             if (notifications.length) {
                 res.json(notifications);
             } else {
