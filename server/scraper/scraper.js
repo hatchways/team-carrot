@@ -1,10 +1,14 @@
 const puppeteer = require('puppeteer');
 const browserPromise = require('./browser');
+const fs = require('fs');
+const preloadFile = fs.readFileSync(__dirname + '/preload.js', 'utf8');
+
 const getProductContent = (siteUrl) => {
     let promise = new Promise(async(resolve, reject) => {
         const browser = await browserPromise.getInstance();
         console.log("SCRAPING URL", siteUrl);
         const page = await browser.newPage();
+        await page.evaluateOnNewDocument(preloadFile);
         await page.goto(siteUrl, { timeout: 600000 });
         // await page.waitFor(Math.floor(Math.random() * 7) * 1000);
         await page.waitFor("#productTitle");
