@@ -65,7 +65,10 @@ router.post(
 
             await user.save();
 
-            const payload = {
+            // getting notification from the database
+            let notifications = await Notification.find({ user: user.id });
+
+            const body = {
                 user: {
                     id: user.id,
                     name: user.name
@@ -73,11 +76,11 @@ router.post(
             };
 
             jwt.sign(
-                payload,
+                body,
                 config.get("jwtSecret"), { expiresIn: 36000 },
                 (err, token) => {
                     if (err) throw err;
-                    res.status(201).json({ token, payload });
+                    res.status(201).json({ token, body });
                 }
             );
         } catch (err) {

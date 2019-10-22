@@ -61,4 +61,20 @@ router.get('/', auth, async(req, res, next) => {
         res.status(500).send("server error");
     }
 });
+
+
+router.delete('/', auth, async(req, res) => {
+
+    try {
+        await List.findByIdAndRemove({ user: req.user.id, _id: req.body.id });
+        res.json({ msg: 'List deleted' });
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+
+})
+
+
+
 module.exports = router

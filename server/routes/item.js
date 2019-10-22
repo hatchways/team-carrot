@@ -116,4 +116,20 @@ router.get('/:name', auth, [
     }
 });
 
+
+
+router.delete('/', auth, async(req, res) => {
+
+    try {
+        await Item.findByIdAndRemove({ user: req.user.id, _id: req.body.id });
+        res.json({ msg: 'Item deleted' });
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+
+})
+
+
+
 module.exports = router;
