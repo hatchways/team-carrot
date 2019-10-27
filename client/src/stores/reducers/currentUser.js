@@ -7,12 +7,19 @@ const DEFAULT_STATE = {
   user: {} // all the user info when logged in
 };
 
+let REMOVE_CURRENT_USER = "REMOVE_CURRENT_USER";
+
 export default (state = DEFAULT_STATE, action) => {
   switch (action.type) {
     case SET_CURRENT_USER:
       return {
         isAuthenticated: Object.keys(action.user).length > 0,
         user: action.user
+      };
+    case REMOVE_CURRENT_USER:
+      return {
+        isAuthenticated: false,
+        user: {}
       };
     default:
       return state;

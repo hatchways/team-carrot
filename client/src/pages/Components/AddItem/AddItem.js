@@ -23,28 +23,36 @@ class AddItem extends Component {
   }
 
   handleChange(e) {
-    this.setState({ [e.target.name]: e.target.value }, () => {
-      console.log(this.state);
-    });
+    this.setState(
+      { [e.target.name]: e.target.value },
+      () => {
+        // console.log(this.state);
+      },
+      () => {
+        // this.props.store.dispatch(saveItemUrl(this.state.linkInput));
+      }
+    );
+    //this.props.store.dispatch(saveItemUrl(this.state.linkInput));
   }
 
   handleClick(e) {
     this.setState({
       addClicked: !this.state.addClicked
     });
-    this.props.store.dispatch(saveItemUrl(this.state.linkInput));
+    if (this.state.linkInput !== "")
+      this.props.store.dispatch(saveItemUrl(this.state.linkInput));
   }
 
   handleConfirmClose(e) {
     // clearItemDetails();
-    console.log("This is hit");
+    // console.log("This is hit");
     this.props.store.dispatch(clearItemDetails());
     // this.props.dispatch(clearItemDetails());
   }
 
   render() {
-    console.log("Add item props");
-    console.log(this.props);
+    // console.log("Add item props");
+    // console.log(this.props);
     const { sendUrl } = this.props;
     return (
       <div className="additem-container">

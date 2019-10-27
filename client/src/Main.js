@@ -6,8 +6,8 @@ import DashBoardApp from "./pages/Pages/Dashboard";
 
 const Main = props => {
   let isAuth = props.currentUser.isAuthenticated;
-  console.log("Main Props");
-  console.log(props);
+  // console.log("Main Props");
+  // console.log(props);
 
   return (
     <Switch>
@@ -25,8 +25,8 @@ const Main = props => {
 };
 
 function mapStateToProps(state) {
-  console.log("Redux State");
-  console.log(state);
+  // console.log("Redux State");
+  // console.log(state);
   return {
     currentUser: state.currentUser
   };

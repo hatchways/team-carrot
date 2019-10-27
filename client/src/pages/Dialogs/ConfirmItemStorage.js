@@ -9,17 +9,22 @@ import DialogActions from "@material-ui/core/DialogActions";
 import Fab from "@material-ui/core/Fab";
 import { apiCallWithHeader } from "../../services/apiHeaders";
 import { connect } from "react-redux";
+// import CheckItem from "./Icon";
+// npm install --save-dev @iconify/react @iconify/icons-mdi
+import { Icon, InlineIcon } from "@iconify/react";
+import checkCircleOutline from "@iconify/icons-mdi/check-circle-outline";
 
 const styles = theme => ({
   dialogPaper: {
-    minHeight: "60vh",
-    maxHeight: "60vh",
-    minWidth: "45vw",
-    maxWidth: "45vw",
+    minHeight: "40vh",
+    maxHeight: "40vh",
+    minWidth: "35vw",
+    maxWidth: "35vw",
     display: "flex",
     textAlign: "center",
     margin: "10px",
-    padding: 20
+    padding: 20,
+    overflow: "hidden"
   },
   formWidth: {
     width: "100%",
@@ -30,7 +35,9 @@ const styles = theme => ({
   },
   textFieldHeader: {
     margin: 0,
-    fontWeight: 600
+    fontWeight: 600,
+    fontSize: 120,
+    color: "green"
   },
   FormControl: {
     width: "60%"
@@ -55,79 +62,32 @@ class ConfirmItemStorage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      url: "",
-      selectedFromList: "",
-      disableSelectList: false
+      addClicked: false
     };
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChangeDropdown = this.handleChangeDropdown.bind(this);
+    // this.handleClick = this.handleClick.bind(this);
   }
 
   handleChange(e) {
     this.setState({ [e.target.name]: e.target.value });
   }
 
-  handleChangeDropdown(e) {
-    this.setState({ selectedFromList: e.target.value }, () => {
-      console.log("Current State of Confirm Item");
-      console.log(this.state);
-      console.log("Current Props of Confirm Item");
-      console.log(this.props);
-    });
-  }
+  // handleClick(e) {
+  //   this.setState({
+  //     addClicked: !this.state.addClicked
+  //   });
+  // }
 
   handleSubmit = e => {
     e.preventDefault();
-    const type = "storeItem";
-    const userData = {
-      url: this.props.currentLink.link,
-      name: this.props.itemInfo.details.data.name,
-      list_name: this.state.selectedFromList,
-      prices: this.props.itemInfo.details.data.prices,
-      pictureUrl: this.props.itemInfo.details.data.pictureUrl
-    };
-
-    const headers = {
-      headers: {
-        "x-auth-token": localStorage.getItem("jwtToken")
-      }
-    };
-    console.log(headers);
-    console.log(headers.headers["x-auth-token"].length);
-    console.log(localStorage.getItem("jwtToken").length);
-
-    // this.props.sendURL(userData, headers);
-
-    apiCallWithHeader(
-      "post",
-      `http://localhost:4000/item/${type}`,
-      userData,
-      headers
-    ).then(res => {
-      console.log(res);
-    });
   };
 
   render() {
     const { link, list, selectedFromList, disableSelectList } = this.state;
-    const { classes, itemInfo, currentShoppingList } = this.props;
+    const { classes, show } = this.props;
     console.log("These are the Confirm Item Storage props");
     console.log(this.props);
-
-    const dropdown = currentShoppingList.map((item, index) => {
-      return (
-        <MenuItem
-          key={index}
-          label="Select"
-          value={item.name}
-          name={item.name}
-          className={classes.menuDropdown}
-        >
-          {item.name}
-        </MenuItem>
-      );
-    });
+    console.log("These are the Confirm Item Storage state");
+    console.log(this.state);
 
     return (
       <div>
@@ -136,81 +96,24 @@ class ConfirmItemStorage extends React.Component {
             ({ paper: classes.dialogContainer }, { paper: classes.dialogPaper })
           }
           open={this.props.open}
-          onClose={this.props.handleClick}
+          onClose={this.props.close}
           aria-labelledby="form-dialog-title"
         >
           <DialogTitle id="form-dialog-title">
-            <h3 style={{ textAlign: "center" }}>Confirm New Item</h3>
+            <h3 style={{ textAlign: "center" }}>
+              Item has been successfully added
+            </h3>
           </DialogTitle>
+          <p className={classes.textFieldHeader}>
+            {" "}
+            <Icon icon={checkCircleOutline} />
+          </p>
 
-          <form
-            action="/"
-            method="POST"
-            onSubmit={this.handleSubmit.bind(this)}
-            className={classes.formWidth}
-          >
-            <p className={classes.textFieldHeader}>Name:</p>
-            <TextField
-              id="outlined-name"
-              label="Name"
-              value={itemInfo.details.data.name}
-              type="text"
-              name="link"
-              margin="normal"
-              variant="outlined"
-              className={classes.FormControl}
-              onChange={this.handleChange}
-            />
-            <br />
-            <DialogActions>
-              {/* <Fab
-                type="submit"
-                label="Submit"
-                variant="extended"
-                size="large"
-                className={classes.buttonStyles}
-              >
-                Confirm Item
-              </Fab> */}
-            </DialogActions>
-          </form>
+          <br />
         </Dialog>
       </div>
     );
   }
 }
 
-// function mapStateToProps(state) {
-//   return {
-//     currentItemUrl: state.url
-//   };
-// }
-
-// export default connect(
-//   mapStateToProps,
-
-// )(DashBoardApp);
-
-// export default connect(
-//   mapStateToProps,
-//   { sendNewItemUrl }
-// )(NewItem);
-
-// export default withStyles(styles)(connect(mapStateToProps)(NewItem));
-
 export default withStyles(styles)(ConfirmItemStorage);
-
-{
-  /* <TextField
-              select
-              label={selectedFromList === "" ? "Select" : ""}
-              value={selectedFromList}
-              onChange={this.handleChangeDropdown}
-              InputLabelProps={{ shrink: false }}
-              className={classes.selectTextField}
-              variant="outlined"
-              margin="normal"
-            >
-              {dropdown}
-            </TextField> */
-}

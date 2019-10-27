@@ -14,7 +14,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 
 const styles = theme => ({
   dialogPaper: {
-    minHeight: "50vh",
+    minHeight: "55vh",
     maxHeight: "60vh",
     minWidth: "45vw",
     maxWidth: "45vw",
@@ -85,6 +85,7 @@ class NewItem extends React.Component {
 
   handleChange(e) {
     this.setState({ [e.target.name]: e.target.value });
+    this.props.store.dispatch(saveItemUrl(this.state.link));
   }
 
   handleChangeDropdown(e) {
@@ -118,7 +119,12 @@ class NewItem extends React.Component {
         this.setState({ loading: false });
       })
       .then(() => {
-        this.props.store.dispatch(saveItemUrl(this.state.link));
+        if (!this.props.link) {
+          this.props.store.dispatch(saveItemUrl(this.state.link));
+        }
+      })
+      .then(() => {
+        this.props.handleClick();
       });
 
     // apiCallWithHeader(

@@ -11,8 +11,8 @@ import FormHelperText from "@material-ui/core/FormHelperText";
 
 const styles = theme => ({
   dialogPaper: {
-    minHeight: "65vh",
-    maxHeight: "65vh",
+    minHeight: "72vh",
+    maxHeight: "72vh",
     minWidth: "45vw",
     maxWidth: "45vw",
     display: "flex",

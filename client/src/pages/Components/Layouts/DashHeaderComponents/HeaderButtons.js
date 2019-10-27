@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import HeaderPopOver from "./HeaderPopOver";
+import HeaderPopOverList from "./HeaderPopOverList";
+import Badge from "@material-ui/core/Badge";
 
 const containerStyle = {
   display: "flex",
@@ -7,19 +9,32 @@ const containerStyle = {
 };
 
 const HeaderButtons = props => {
-  console.log("HeaderButton Props");
-  console.log(props);
+  let [clicked, setClicked] = useState(props.notifications ? true : false);
+
+  const clickHandler = e => {
+    e.preventDefault();
+    setClicked(true);
+  };
+
   return (
     <div style={containerStyle}>
-      <HeaderPopOver
+      <HeaderPopOverList
         name={"Shopping List"}
-        notifications={props.notifications}
+        shoppingList={props.shoppingList}
       />
-      <HeaderPopOver name={"Friends"} notifications={props.notifications} />
-      <HeaderPopOver
-        name={"Notifications"}
-        notifications={props.notifications}
-      />
+      {/* <HeaderPopOver name={"Friends"} notifications={props.notifications} /> */}
+      <Badge
+        color="secondary"
+        variant="dot"
+        onClick={clickHandler.bind(this)}
+        invisible={clicked}
+      >
+        <HeaderPopOver
+          name={"Notifications"}
+          notifications={props.notifications}
+          loadNotifications={props.loadNotifications}
+        />
+      </Badge>
     </div>
   );
 };

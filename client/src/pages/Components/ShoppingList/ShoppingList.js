@@ -31,9 +31,11 @@ class ShoppingList extends Component {
             return (
               <ShoppingCard
                 key={index}
+                id={item._id}
                 name={item.name}
                 img={item.url}
                 store={this.props.store}
+                onSubmit={this.props.onSubmit.bind(this)}
               />
             );
           })}

@@ -3,17 +3,12 @@ import { makeStyles } from "@material-ui/core/styles";
 import Popover from "@material-ui/core/Popover";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import "./HeaderPopOver.css";
 import DismissButton from "./DismissButton";
+import "./HeaderPopOverList.css";
 
 const useStyles = makeStyles(theme => ({
   typography: {
     padding: theme.spacing(0.1)
-  },
-  noNotif: {
-    textAlign: "center",
-    height: "55px",
-    paddingTop: "20px"
   }
 }));
 
@@ -59,46 +54,42 @@ export default function HeaderPopOver(props) {
         }}
         PaperProps={{
           style: {
-            maxHeight: 75 * 4.5,
-            width: 600
+            maxHeight: 75 * 3.5,
+            width: "25%"
           }
         }}
         className="MuiPaper-root.MuiPaper-elevation8.MuiPopover-paper.MuiPaper-rounded"
       >
-        {" "}
-        {props.notifications.length === 0 ? (
-          <Typography className={classes.noNotif}> No notifications</Typography>
-        ) : null}
-        {props.notifications &&
-          props.notifications.map((item, index) => {
+        {props.shoppingList &&
+          props.shoppingList.map((item, index) => {
             return (
               <Typography key={index} className={classes.typography}>
                 <div>
                   <div className="EachItem-Container">
                     <div className="EachItem-img-container">
-                      {item.imageUrl && (
+                      {item.url && (
                         <img
                           className="EachItem-img"
-                          src={item.imageUrl}
+                          src={item.url}
                           alt="img"
                         ></img>
                       )}
                     </div>
                     <div>
                       <span className="EachItem-name">
-                        {item.itemName && <p id="name">{item.itemName}</p>}
-                        {item.itemUrl && <p id="link">{item.itemUrl}</p>}
-                        <span className="EachItem-price">
+                        {item.name && <p id="listname">{item.name}</p>}
+                        {/* {item.itemUrl && <p id="link">{item.itemUrl}</p>} */}
+                        {/* <span className="EachItem-price">
                           <p id="oldPrice">${item.previousPrice}</p>
                           <p id="newPrice">${item.newPrice}</p>
-                        </span>
+                        </span> */}
                       </span>
                     </div>
                     <span>
-                      <DismissButton
-                        itemDetail={item}
-                        loadNotifications={props.loadNotifications}
-                      ></DismissButton>
+                      {/* <DismissButton
+                      // itemDetail={item}
+                      // loadNotifications={props.loadNotifications}
+                      ></DismissButton> */}
                     </span>
                   </div>
                 </div>

@@ -6,6 +6,8 @@ import HeaderButtons from "./DashHeaderComponents/HeaderButtons";
 import HeaderProfile from "./DashHeaderComponents/HeaderProfile";
 import { connect } from "react-redux";
 import { loadNotifications } from "../../../stores/actions/getNotifications";
+import { SignOutButton } from "./DashHeaderComponents/SignOut";
+import { SignOutAction } from "../../../stores/actions/SignOut";
 
 class DashHeader extends Component {
   constructor(props) {
@@ -14,7 +16,7 @@ class DashHeader extends Component {
   }
 
   componentDidMount() {
-    console.log("Expand did mount");
+    // console.log("Expand did mount");
     const headers = {
       headers: {
         "x-auth-token": localStorage.getItem("jwtToken")
@@ -22,6 +24,19 @@ class DashHeader extends Component {
     };
 
     this.props.loadNotifications(headers);
+    setInterval(() => {
+      console.log("notification being hit");
+      this.props.loadNotifications(headers);
+    }, 5000 * 60);
+  }
+
+  componentWillUnmount() {
+    clearInterval();
+  }
+
+  signOut() {
+    // console.log(this.props.SignOutAction);
+    this.props.SignOutAction();
   }
 
   render() {
@@ -39,8 +54,8 @@ class DashHeader extends Component {
     };
     console.log("DashHeader Props");
     console.log(this.props);
-    console.log("DashHeader Props user");
-    console.log(this.props.currentUser.user);
+    // console.log("DashHeader Props user");
+    // console.log(this.props.currentUser.user);
     return (
       <AppBar position="static">
         <Toolbar style={styleToolbar}>
@@ -53,16 +68,12 @@ class DashHeader extends Component {
           </div>
           <div style={styleToolbarRight}>
             <HeaderButtons
-              notifications={this.props.currentNotifications.notifications.reverse()}
+              notifications={this.props.currentNotifications.notifications}
+              loadNotifications={this.props.loadNotifications}
+              shoppingList={this.props.currentShoppingList.list}
             />
-            <HeaderProfile
-              // user={
-              //   Object.keys(this.props.currentUser.user).length === 0
-              //     ? { name: "Dev Default" }
-              //     : this.props.currentUser.user.payload.user
-              // }
-              user={this.props.currentUser.user.body.user}
-            />
+            <HeaderProfile user={this.props.currentUser.user.body.user} />
+            <SignOutButton signOut={this.signOut.bind(this)} {...this.props} />
           </div>
         </Toolbar>
       </AppBar>
@@ -78,5 +89,5 @@ function mapStateToProps(state) {
 
 export default connect(
   mapStateToProps,
-  { loadNotifications }
+  { loadNotifications, SignOutAction }
 )(DashHeader);

@@ -9,6 +9,11 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import ShoppingListExpandDialog from "../../Dialogs/ShoppingListExpandDialog";
 import { withStyles } from "@material-ui/styles";
+import { Icon, InlineIcon } from "@iconify/react";
+import closeIcon from "@iconify/icons-mdi/close";
+import "./ShoppingCard.css";
+import { DeleteList } from "./DeleteList";
+import axios from "axios";
 
 const styles = theme => ({
   card: {
@@ -27,10 +32,40 @@ class ShoppingCard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      addClicked: false
+      addClicked: false,
+      deleteFlag: false
     };
     this.handleClick = this.handleClick.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
+    this.handleClickOpen = this.handleClickOpen.bind(this);
+    this.handleClose = this.handleClose.bind(this);
   }
+
+  handleDelete = e => {
+    e.preventDefault();
+    const type = "list";
+    const userData = {
+      id: this.props.id
+    };
+    console.log(userData);
+
+    const headers = {
+      headers: {
+        "x-auth-token": localStorage.getItem("jwtToken")
+      }
+    };
+    axios
+      .delete(`http://localhost:4000/${type}`, {
+        data: { id: this.props.id },
+        headers: { "x-auth-token": localStorage.getItem("jwtToken") }
+      })
+      .then(res => {
+        console.log(res);
+        this.setState({ deleteFlag: false }, () => {
+          this.props.onSubmit();
+        });
+      });
+  };
 
   handleClick(e) {
     console.log("Exand dialog clicked");
@@ -45,10 +80,28 @@ class ShoppingCard extends Component {
     );
   }
 
+  handleClickOpen() {
+    console.log("handleclickOpen is clicked");
+    this.setState({ deleteFlag: true }, () => {
+      console.log(this.state);
+    });
+  }
+
+  handleClose() {
+    this.setState({ deleteFlag: false });
+  }
+
   render() {
     const { classes } = this.props;
     return (
-      <div>
+      <div className="DeleteList-container">
+        <DeleteList
+          itemId={this.props.id}
+          handleDelete={this.handleDelete}
+          open={this.state.deleteFlag}
+          handleClose={this.handleClose}
+          handleClickOpen={this.handleClickOpen}
+        />
         <span onClick={this.handleClick}>
           <Card className={classes.card}>
             <CardActionArea>

@@ -9,12 +9,13 @@ import DialogActions from "@material-ui/core/DialogActions";
 import Fab from "@material-ui/core/Fab";
 import { apiCallWithHeader } from "../../services/apiHeaders";
 import { connect } from "react-redux";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import ConfirmItemStorage from "./ConfirmItemStorage";
 
 const styles = theme => ({
   dialogPaper: {
-    minHeight: "60vh",
-    maxHeight: "60vh",
+    minHeight: "85vh",
+    maxHeight: "85vh",
     minWidth: "45vw",
     maxWidth: "45vw",
     display: "flex",
@@ -49,6 +50,19 @@ const styles = theme => ({
     background: "#DF1B1B",
     marginTop: "35px",
     color: "white"
+  },
+  imageStyle: {
+    marginTop: "35px",
+    width: "40%",
+    height: "auto"
+  },
+  root: {
+    height: "45px"
+  },
+  circularProgress: {
+    height: "40px",
+    width: "40px",
+    color: "#DF1B1B"
   }
 });
 
@@ -59,11 +73,13 @@ class NewItem extends React.Component {
       url: "",
       selectedFromList: "",
       disableSelectList: false,
-      addClicked: false
+      addClicked: false,
+      loading: false
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChangeDropdown = this.handleChangeDropdown.bind(this);
+    this.handleClose = this.handleClose.bind(this);
   }
 
   componentDidMount() {
@@ -94,8 +110,20 @@ class NewItem extends React.Component {
     });
   }
 
+  handleClose(e) {
+    this.setState(
+      {
+        addClicked: !this.state.addClicked
+      },
+      () => {
+        this.props.handleClick();
+      }
+    );
+  }
+
   handleSubmit = e => {
     e.preventDefault();
+    this.setState({ loading: true });
     const type = "storeItem";
     const userData = {
       url: this.props.currentLink.link,
@@ -121,13 +149,22 @@ class NewItem extends React.Component {
       `http://localhost:4000/item/${type}`,
       userData,
       headers
-    ).then(res => {
-      console.log(res);
+    ).then(() => {
+      this.setState({ loading: false, addClicked: true });
     });
+    // .then(() => {
+    //   this.props.handleClick();
+    // });
   };
 
   render() {
-    const { link, list, selectedFromList, disableSelectList } = this.state;
+    const {
+      link,
+      list,
+      selectedFromList,
+      disableSelectList,
+      loading
+    } = this.state;
     const { classes, itemInfo, currentShoppingList } = this.props;
     console.log("These are the Confirm Item props");
     console.log(this.props);
@@ -193,7 +230,11 @@ class NewItem extends React.Component {
             />
             <br />
             <p className={classes.textFieldHeader}>Image:</p>
-            <img src={itemInfo.details.data.pictureUrl} alt="pic"></img>
+            <img
+              className={classes.imageStyle}
+              src={itemInfo.details.data.pictureUrl}
+              alt="pic"
+            ></img>
             <br />
             {/* -=-==---------------------------------------------------------------------------------------------------------------------------------- */}
             <p className={classes.textFieldHeader}>Select list:</p>
@@ -212,18 +253,31 @@ class NewItem extends React.Component {
             </TextField>
 
             {/* -=-==---------------------------------------------------------------------------------------------------------------------------------- */}
-            <DialogActions>
+            <div className={classes.circularProgress}>
+              {loading ? (
+                <CircularProgress
+                  className={classes.progress}
+                  color="inherit"
+                />
+              ) : null}
+            </div>
+            <DialogActions className={classes.root}>
               <Fab
                 type="submit"
                 label="Submit"
                 variant="extended"
                 size="large"
                 className={classes.buttonStyles}
+                disabled={loading}
               >
                 Confirm Item
               </Fab>
             </DialogActions>
           </form>
+          <ConfirmItemStorage
+            open={this.state.addClicked}
+            close={this.handleClose}
+          />
         </Dialog>
       </div>
     );

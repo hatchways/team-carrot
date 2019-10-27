@@ -15,6 +15,7 @@ import NewItem from "./NewItem";
 import { sendUrl } from "../../stores/actions/sendURLGetItemInfo";
 import { saveListName } from "../../stores/actions/setPreSelectedList";
 import { clearListName } from "../../stores/actions/setPreSelectedList";
+import { DeleteButton } from "./Delete";
 
 const styles = theme => ({
   dialogPaper: {
@@ -101,6 +102,14 @@ class ShoppingListExpandDialog extends React.Component {
         }
       );
     });
+  }
+
+  componentDidUpdate(prevProps) {
+    if (
+      this.props.itemInfoScrapped.details !== prevProps.itemInfoScrapped.details
+    ) {
+      this.getItems();
+    }
   }
 
   handleChange(e) {
@@ -213,6 +222,7 @@ class ShoppingListExpandDialog extends React.Component {
                   return (
                     <EachItemInList
                       key={index}
+                      id={item._id}
                       name={item.name}
                       link={item.url}
                       img={item.pictureUrl}
@@ -221,6 +231,7 @@ class ShoppingListExpandDialog extends React.Component {
                         "$" + item.prices[item.prices.length - 2].value
                       }
                       newPrice={"$" + item.prices[item.prices.length - 1].value}
+                      getItem={this.getItems.bind(this)}
                     />
                   );
                 })}
@@ -257,7 +268,8 @@ function mapStateToProps(state) {
     shoppingList: state.shoppingList, // left size is the state of this comp while right side is from redux
     currentShoppingList: state.currentShoppingList,
     currentItemsInEachShoppingList: state.currentItemsInEachShoppingList,
-    currentItemUrl: state.currentItemUrl
+    currentItemUrl: state.currentItemUrl,
+    itemInfoScrapped: state.itemInfoScrapped
   };
 }
 

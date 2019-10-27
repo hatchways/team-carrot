@@ -11,6 +11,7 @@ export function setCurrentNotifications(notifications) {
 
 export function loadNotifications(headers) {
   return dispatch => {
+    console.log("loadNotifications is hit");
     return new Promise((resolve, reject) => {
       return apiCallWithHeader(
         "get",
@@ -24,6 +25,8 @@ export function loadNotifications(headers) {
           resolve();
         })
         .catch(err => {
+          console.log("The current notifications should come here");
+          console.log(err);
           reject();
         });
     });
