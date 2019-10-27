@@ -19,6 +19,8 @@ class ShoppingList extends Component {
   }
 
   render() {
+    console.log("Shopping List Props");
+    console.log(this.props);
     return (
       <div className="shoppingList-container">
         <div className="shoppingList-title">
@@ -29,15 +31,18 @@ class ShoppingList extends Component {
             return (
               <ShoppingCard
                 key={index}
+                id={item._id}
                 name={item.name}
-                img={item.img}
-                items={item.items}
+                img={item.url}
+                store={this.props.store}
+                onSubmit={this.props.onSubmit.bind(this)}
               />
             );
           })}
           <ShoppingListDialog
             open={this.state.addClicked}
             handleClick={this.handleClick.bind(this)}
+            onSubmit={this.props.onSubmit.bind(this)}
           />
           <span onClick={this.handleClick.bind(this)}>
             <EmptyCard></EmptyCard>

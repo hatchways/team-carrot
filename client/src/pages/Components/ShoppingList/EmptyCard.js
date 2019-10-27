@@ -10,6 +10,7 @@ const useStyles = makeStyles({
     width: 300,
     height: 350,
     margin: 10,
+    marginTop: 35,
     padding: 0,
     textAlign: "center",
     boxShadow: "5px 5px 10px #cecece"
