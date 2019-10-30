@@ -78,19 +78,9 @@ export default function HeaderPopOver(props) {
                     <div>
                       <span className="EachItem-name">
                         {item.name && <p id="listname">{item.name}</p>}
-                        {/* {item.itemUrl && <p id="link">{item.itemUrl}</p>} */}
-                        {/* <span className="EachItem-price">
-                          <p id="oldPrice">${item.previousPrice}</p>
-                          <p id="newPrice">${item.newPrice}</p>
-                        </span> */}
                       </span>
                     </div>
-                    <span>
-                      {/* <DismissButton
-                      // itemDetail={item}
-                      // loadNotifications={props.loadNotifications}
-                      ></DismissButton> */}
-                    </span>
+                    <span></span>
                   </div>
                 </div>
               </Typography>
