@@ -38,7 +38,7 @@ class DashBoardApp extends Component {
 
     return (
       <div>
-        <DashHeader {...this.props} />
+        <DashHeader {...this.props} store={store} />
         <AddItem store={store} shoppingList={this.state.shoppingList} />
         <ShoppingList
           onSubmit={this.componentDidMount.bind(this)}

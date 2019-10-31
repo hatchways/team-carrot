@@ -71,6 +71,7 @@ class DashHeader extends Component {
               notifications={this.props.currentNotifications.notifications}
               loadNotifications={this.props.loadNotifications}
               shoppingList={this.props.currentShoppingList.list}
+              store={this.props.store}
             />
             <HeaderProfile user={this.props.currentUser.user.body.user} />
             <SignOutButton signOut={this.signOut.bind(this)} {...this.props} />

@@ -5,6 +5,8 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import DismissButton from "./DismissButton";
 import "./HeaderPopOverList.css";
+import ShoppingListExpandDialog from "../../../Dialogs/ShoppingListExpandDialog";
+import EachList from "./EachList";
 
 const useStyles = makeStyles(theme => ({
   typography: {
@@ -15,9 +17,14 @@ const useStyles = makeStyles(theme => ({
 export default function HeaderPopOver(props) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [addClicked, setaddClicked] = React.useState(false);
 
   const handleClick = event => {
     setAnchorEl(event.currentTarget);
+  };
+
+  const toggleList = () => {
+    setaddClicked(!addClicked);
   };
 
   const handleClose = () => {
@@ -63,27 +70,14 @@ export default function HeaderPopOver(props) {
         {props.shoppingList &&
           props.shoppingList.map((item, index) => {
             return (
-              <Typography key={index} className={classes.typography}>
-                <div>
-                  <div className="EachItem-Container">
-                    <div className="EachItem-img-container">
-                      {item.url && (
-                        <img
-                          className="EachItem-img"
-                          src={item.url}
-                          alt="img"
-                        ></img>
-                      )}
-                    </div>
-                    <div>
-                      <span className="EachItem-name">
-                        {item.name && <p id="listname">{item.name}</p>}
-                      </span>
-                    </div>
-                    <span></span>
-                  </div>
-                </div>
-              </Typography>
+              <div>
+                <EachList
+                  key={index}
+                  imgUrl={item.url}
+                  listName={item.name}
+                  store={props.store}
+                />
+              </div>
             );
           })}
       </Popover>
