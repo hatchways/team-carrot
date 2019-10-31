@@ -35,7 +35,7 @@ class DashHeader extends Component {
   }
 
   signOut() {
-    // console.log(this.props.SignOutAction);
+    console.log("signOutisclicked");
     this.props.SignOutAction();
   }
 
