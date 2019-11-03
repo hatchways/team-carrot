@@ -21,6 +21,7 @@ const HeaderButtons = props => {
       <HeaderPopOverList
         name={"Shopping List"}
         shoppingList={props.shoppingList}
+        store={props.store}
       />
       {/* <HeaderPopOver name={"Friends"} notifications={props.notifications} /> */}
       <Badge

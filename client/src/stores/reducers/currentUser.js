@@ -1,4 +1,5 @@
 import { SET_CURRENT_USER } from "../actionTypes";
+import { REMOVE_CURRENT_USER } from "../actionTypes";
 
 // the purpose of this reducer is to know is the user logged in and who that user is
 
@@ -7,7 +8,7 @@ const DEFAULT_STATE = {
   user: {} // all the user info when logged in
 };
 
-let REMOVE_CURRENT_USER = "REMOVE_CURRENT_USER";
+// let REMOVE_CURRENT_USER = "REMOVE_CURRENT_USER";
 
 export default (state = DEFAULT_STATE, action) => {
   switch (action.type) {
@@ -17,6 +18,7 @@ export default (state = DEFAULT_STATE, action) => {
         user: action.user
       };
     case REMOVE_CURRENT_USER:
+      console.log("This is hit here");
       return {
         isAuthenticated: false,
         user: {}
