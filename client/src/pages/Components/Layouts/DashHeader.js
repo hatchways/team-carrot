@@ -8,6 +8,9 @@ import { connect } from "react-redux";
 import { loadNotifications } from "../../../stores/actions/getNotifications";
 import { SignOutButton } from "./DashHeaderComponents/SignOut";
 import { SignOutAction } from "../../../stores/actions/SignOut";
+import { configureStore } from "../../../stores";
+
+const store = configureStore();
 
 class DashHeader extends Component {
   constructor(props) {
@@ -71,7 +74,7 @@ class DashHeader extends Component {
               notifications={this.props.currentNotifications.notifications}
               loadNotifications={this.props.loadNotifications}
               shoppingList={this.props.currentShoppingList.list}
-              store={this.props.store}
+              store={store}
             />
             <HeaderProfile user={this.props.currentUser.user.body.user} />
             <SignOutButton signOut={this.signOut.bind(this)} {...this.props} />
