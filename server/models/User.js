@@ -18,6 +18,9 @@ const UserSchema = new Schema({
     },
     latest_notification: {
         type: Date
+    },
+    profilePictureUrl: {
+        type: String
     }
 
 })
