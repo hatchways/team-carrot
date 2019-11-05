@@ -48,10 +48,12 @@ router.post('/', auth, (req, res) => {
 
 router.get('/', auth, async(req, res, next) => {
     try {
-        const lists = await List.find({
-            user: req.user.id
+        const user = await User.findOne({
+            _id: req.user.id
         });
-        res.json(lists);
+        res.json({
+            profilePictureUrl: user.profilePictureUrl
+        });
     } catch (err) {
         console.log(err.message);
         res.status(500).send("server error");
