@@ -9,6 +9,7 @@ import config from "config";
 import { check, validationResult, body } from "express-validator";
 import User from "../models/User";
 import Notification from '../models/Notification';
+import { isError } from "util";
 
 const router = express.Router();
 
@@ -140,6 +141,7 @@ router.post(
                 user: {
                     id: user.id,
                     name: user.name,
+                    profilePictureUrl: user.profilePictureUrl
                 },
                 notifications
             }
